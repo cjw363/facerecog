@@ -10,6 +10,8 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>facerecog-service</module>
+		<module>facerecog-common</module>
+		<module>facerecog-interface</module>
 	</modules>
 
 	<!-- springboot项目 -->
