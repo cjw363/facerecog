@@ -1,5 +1,5 @@
 server:
-  port: 8089 #指定端口
+  port: 9090 #指定端口
 spring:
   application:
     name: facerecog-service
@@ -8,6 +8,9 @@ spring:
     username: webdb
     password: sn18320110405
     driver-class-name: com.mysql.jdbc.Driver
+  cache:
+    ehcache:
+      config: ehcache.xml
 mybatis:
   type-aliases-package: com.facerecog.pojo
   mapper-locations: mapper/*.xml
