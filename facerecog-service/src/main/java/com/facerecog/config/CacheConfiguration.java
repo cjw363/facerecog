@@ -1,8 +1,8 @@
 package com.facerecog.config;
 
 import net.sf.ehcache.Cache;
+import net.sf.ehcache.CacheManager;
 
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.ehcache.EhCacheCacheManager;
 import org.springframework.cache.ehcache.EhCacheManagerFactoryBean;
 import org.springframework.context.annotation.Bean;
@@ -10,8 +10,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 
 @Configuration
-// 标注启动了缓存
-@EnableCaching
 public class CacheConfiguration {
     /*
      * ehcache 主要的管理器
@@ -33,7 +31,8 @@ public class CacheConfiguration {
     }
 
     @Bean
-    public Cache cache(){
-        return new Cache(new net.sf.ehcache.config.CacheConfiguration("myCache",10));
+    public Cache cache() {
+        CacheManager cacheManager = ehCacheManagerFactoryBean().getObject();
+        return cacheManager.getCache("myCache");
     }
 }
