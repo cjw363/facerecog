@@ -1,5 +1,7 @@
 server:
   port: 9090 #指定端口
+  servlet:
+    context-path: '/cpfr'
 spring:
   application:
     name: facerecog-service
@@ -22,6 +24,8 @@ facerecog:
       - /user/register
       - /ws
       - /app/**
+      - /static/**
+      - /index.html*
     appExcludePaths:
       - /app/device_register
       - /app/current_date
