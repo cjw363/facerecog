@@ -1,6 +1,6 @@
 package com.facerecog.controller.base;
 
-import com.facerecog.ehcache.AppMemory;
+import com.facerecog.ehcache.AppCache;
 import com.facerecog.pojo.ParamData;
 import com.facerecog.utils.CommConst;
 
@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class AppBaseController extends BaseController{
     @Autowired
-    private AppMemory memory;
+    private AppCache memory;
 
     /**
      * 初始化参数

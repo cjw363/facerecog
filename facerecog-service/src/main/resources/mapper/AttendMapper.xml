@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.facerecog.dao.AttendDao">
+    <select id="selectAttendList" parameterType="pd" resultType="pd">
+        SELECT r.record_id,p.person_name,d.device_name,r.record_time,r.recog_type FROM
+        tbl_#{wid}_person p RIGHT JOIN tbl_#{wid}_record r ON p.person_id=r.person_id LEFT JOIN tbl_#{wid}_device d ON
+        r.device_id=d.device_id where
+            DATE_FORMAT(r.record_time,'%Y-%m-%d')&lt;#{date_end} AND
+            DATE_FORMAT(r.record_time,'%Y-%m-%d')&gt;#{date_start} AND
+            ((DATE_FORMAT(r.record_time,'%H:%i')&lt;#{am_time_end} AND DATE_FORMAT(r.record_time,'%H:%i')&gt;#{am_time_start}) OR
+            (DATE_FORMAT(r.record_time,'%H:%i')&lt;#{pm_time_end} AND DATE_FORMAT(r.record_time,'%H:%i')&gt;#{pm_time_start}) )
+            <if test="keyword!=null and keyword!=''">
+                and POSITION(#{keyword} IN p.person_name) OR POSITION(#{keyword} IN d.device_name)
+            </if>
+        order by r.record_time desc
+    </select>
+</mapper>

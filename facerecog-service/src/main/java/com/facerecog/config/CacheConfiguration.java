@@ -1,5 +1,7 @@
 package com.facerecog.config;
 
+import net.sf.ehcache.Cache;
+
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.ehcache.EhCacheCacheManager;
 import org.springframework.cache.ehcache.EhCacheManagerFactoryBean;
@@ -25,8 +27,13 @@ public class CacheConfiguration {
     @Bean
     public EhCacheManagerFactoryBean ehCacheManagerFactoryBean() {
         EhCacheManagerFactoryBean cacheManagerFactoryBean = new EhCacheManagerFactoryBean();
-        cacheManagerFactoryBean.setConfigLocation(new ClassPathResource("ehcache.xml"));
+        cacheManagerFactoryBean.setConfigLocation(new ClassPathResource("config/config-ehcache.xml"));
         cacheManagerFactoryBean.setShared(true);
         return cacheManagerFactoryBean;
+    }
+
+    @Bean
+    public Cache cache(){
+        return new Cache(new net.sf.ehcache.config.CacheConfiguration("myCache",10));
     }
 }

@@ -1,0 +1,132 @@
+package com.facerecog.controller;
+
+import com.facerecog.controller.base.WebBaseController;
+import com.facerecog.pojo.HandleEnum;
+import com.facerecog.pojo.PageData;
+import com.facerecog.pojo.ParamData;
+import com.facerecog.pojo.ResultData;
+import com.facerecog.service.interf.GroupService;
+import com.facerecog.utils.CommConst;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
+
+/**
+ * @Classname GroupController
+ * @Description
+ * @Date 2018/10/19 11:17
+ * @Created by cjw
+ */
+@Controller
+@RequestMapping("/group")
+@SuppressWarnings({"rawtypes", "unchecked"})
+public class GroupController extends WebBaseController {
+
+    @Autowired
+    private GroupService mGroupService;
+
+    @ResponseBody
+    @RequestMapping("/list")
+    public ResultData<PageData<ParamData>> list(HttpServletRequest request) {
+        try {
+            return mGroupService.getGroupList(paramDataInit());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
+        }
+    }
+
+    @RequestMapping("/detail")
+    public String detail(Model model, HttpServletRequest request) {
+        try {
+            ParamData data = mGroupService.queryGroup(paramDataInit());
+            model.addAttribute(CommConst.DATA, data.toJsonString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return "group/group_detail";
+    }
+
+    @ResponseBody
+    @RequestMapping("/add")
+    public ResultData<ParamData> add(HttpServletRequest request) {
+        try {
+            return mGroupService.addGroup(paramDataInit());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping("/add_person")
+    public ResultData<ParamData> addPerson(HttpServletRequest request) {
+        try {
+            return mGroupService.addGroupPerson(paramDataInit());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping("/add_device")
+    public ResultData<ParamData> addDevice(HttpServletRequest request) {
+        try {
+            return mGroupService.addGroupDevice(paramDataInit());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping("/update_info")
+    public ResultData<ParamData> updateInfo(HttpServletRequest request) {
+        try {
+            return mGroupService.updateGroupInfo(paramDataInit());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping("/delete")
+    public ResultData<ParamData> delete(HttpServletRequest request) {
+        try {
+            return mGroupService.deleteGroup(paramDataInit());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping("/delete_person")
+    public ResultData<ParamData> deletePerson(HttpServletRequest request) {
+        try {
+            return mGroupService.deleteGroupPerson(paramDataInit());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping("/delete_device")
+    public ResultData<ParamData> deleteDevice(HttpServletRequest request) {
+        try {
+            return mGroupService.deleteGroupDevice(paramDataInit());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
+        }
+    }
+}

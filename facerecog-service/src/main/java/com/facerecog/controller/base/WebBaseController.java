@@ -1,6 +1,6 @@
 package com.facerecog.controller.base;
 
-import com.facerecog.ehcache.WebMemory;
+import com.facerecog.ehcache.WebCache;
 import com.facerecog.pojo.ParamData;
 import com.facerecog.utils.CommConst;
 import com.facerecog.utils.CommUtil;
@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class WebBaseController extends BaseController {
     @Autowired
-    private WebMemory memory;
+    private WebCache memory;
 
     /**
      * 初始化参数

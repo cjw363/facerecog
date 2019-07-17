@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.facerecog.dao.app.FaceAppDao">
+	<insert id="insertInActDevice" parameterType="pd">
+		insert into tbl_inact_device(device_sn,status,online,register_time) values(#{device_sn},0,0,now())
+	</insert>
+
+	<select id="selectUserWid" parameterType="pd" resultType="int">
+		select wid from tbl_user where user_id=#{user_id}
+	</select>
+
+	<select id="selectDevice" parameterType="pd" resultType="pd">
+		select d.device_id,d.device_name,d.device_sn,d.lmt,c.success_msg,c.fail_msg,c.arcface_appid,c.arcface_sdkkey,c.arcface_activekey,c.baidu_tts_appid,c.baidu_tts_appkey,c.baidu_tts_secretkey
+		from tbl_#{wid}_device d left join tbl_#{wid}_device_config c on d.device_id=c.device_id where d.device_sn=#{device_sn} and d.lmt>#{lmt}
+	</select>
+
+	<select id="selectPersonListWithBlob" parameterType="pd" resultType="pd">
+		SELECT a.person_id,a.person_name,a.emp_number,i.blob_image base_image,a.status,a.lmt FROM (SELECT p.person_id,p.person_name,p.emp_number,p.image_id,p.status,p.lmt FROM tbl_#{wid}_person p RIGHT JOIN (SELECT person_id FROM tbl_#{wid}_grant WHERE device_id=(SELECT device_id FROM tbl_#{wid}_device WHERE device_sn=#{device_sn}) ) g ON p.person_id=g.person_id WHERE p.lmt>#{lmt}) a LEFT JOIN tbl_#{wid}_image i ON a.image_id=i.image_id
+	</select>
+
+	<select id="selectPersonList" parameterType="pd" resultType="pd">
+		SELECT p.person_id,p.person_name,p.emp_number,p.image_id,p.status,p.lmt FROM tbl_#{wid}_person p RIGHT JOIN (SELECT person_id FROM tbl_#{wid}_grant WHERE device_id=(SELECT device_id FROM tbl_#{wid}_device WHERE device_sn=#{device_sn})) g ON p.person_id=g.person_id WHERE p.lmt>#{lmt}
+	</select>
+
+	<!--<select id="selectPersonListWithBlob" parameterType="pd" resultType="pd">
+		SELECT a.person_id,a.person_name,a.emp_number,i.blob_image base_image,a.person_status,a.person_lmt,a.grant_id,a.pass_number,a.grant_status,a.pass_start_time,a.pass_end_time,a.grant_lmt FROM (SELECT p.person_id,p.person_name,p.emp_number,p.image_id,p.status person_status,p.lmt person_lmt,g.grant_id,g.pass_number,g.status grant_status,g.pass_start_time,g.pass_end_time,g.lmt grant_lmt FROM tbl_#{wid}_person p RIGHT JOIN (SELECT * FROM tbl_#{wid}_grant WHERE device_id=(SELECT device_id FROM tbl_#{wid}_device WHERE device_sn=#{device_sn}) and status &lt;&gt; 3 ) g ON p.person_id=g.person_id WHERE g.lmt>#{lmt}) a LEFT JOIN tbl_#{wid}_image i ON a.image_id=i.image_id
+	</select>-->
+
+	<select id="selectGrantList" parameterType="pd" resultType="pd">
+		SELECT grant_id,person_id,pass_number,status,pass_start_time,pass_end_time,lmt FROM tbl_#{wid}_grant WHERE device_id=(select device_id from tbl_#{wid}_device where device_sn=#{device_sn}) and lmt>#{lmt}
+	</select>
+
+	<insert id="insertRecord" parameterType="pd">
+		insert into tbl_#{wid}_record(person_id,device_id,record_time,record_image,recog_type) values(#{person_id},(select device_id from tbl_#{wid}_device where device_sn=#{device_sn}),#{record_time},#{record_image},#{recog_type})
+	</insert>
+
+	<select id="selectNow" resultType="string">
+		select now()
+	</select>
+
+	<update id="updateGrantPassNumber" parameterType="pd">
+		update tbl_#{wid}_grant set pass_number=#{pass_number} where device_id=(select device_id from tbl_#{wid}_device where device_sn=#{device_sn}) and person_id=#{person_id}
+	</update>
+
+	<select id="selectPersonListNoSync" parameterType="pd" resultType="pd">
+		SELECT p.* FROM tbl_#{wid}_grant g RIGHT JOIN tbl_#{wid}_person p ON g.person_id=p.person_id WHERE g.device_id=(SELECT device_id FROM tbl_#{wid}_device WHERE device_sn=#{device_sn}) AND p.status &lt;&gt; 3 AND g.sync_status=0
+	</select>
+
+	<select id="selectPerson" parameterType="pd" resultType="pd">
+		SELECT p.person_id,p.person_name,p.emp_number,p.add_time,p.status,p.image_id,p.lmt from tbl_#{wid}_person p where p.person_id=#{person_id} and p.status &lt;&gt; 3
+	</select>
+
+    <update id="updatePunch" parameterType="pd">
+		UPDATE tbl_#{wid}_attend_punch SET pm_punch_out_time=#{record_time} WHERE  person_id =#{person_id} AND  am_punch_in_time IS NOT NULL and DATEDIFF(lmt,NOW())=0;
+		UPDATE tbl_#{wid}_attend_punch SET am_punch_in_time=#{record_time} WHERE  person_id =#{person_id} AND  am_punch_in_time is NULL and DATEDIFF(lmt,NOW())=0;
+    </update>
+
+	<update id="updateGrantSyncStatus" parameterType="pd">
+		<if test="list != null and list.size() >0">
+			UPDATE tbl_#{wid}_grant
+			SET sync_status = CASE person_id
+			<foreach collection="list" item="data">
+				WHEN #{data.person_id} THEN #{data.sync_status}
+			</foreach>
+			END
+			WHERE person_id IN (${person_ids}) and device_id=(SELECT device_id FROM tbl_#{wid}_device WHERE device_sn=#{device_sn})
+		</if>
+	</update>
+
+	<update id="updateDeviceConfig" parameterType="pd">
+		update tbl_#{wid}_device_config set app_version=#{app_version} where device_id=(select device_id from tbl_#{wid}_device where device_sn=#{device_sn})
+	</update>
+</mapper>

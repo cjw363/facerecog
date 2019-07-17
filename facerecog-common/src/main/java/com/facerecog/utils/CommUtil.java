@@ -122,6 +122,9 @@ public class CommUtil {
         return res;
     }
 
+    public static int paramConvert(String param, int initValue) {
+        return param == null ? initValue : Integer.parseInt(param);
+    }
 
     public static boolean mkdir(String filePath) {
         File file = new File(filePath);

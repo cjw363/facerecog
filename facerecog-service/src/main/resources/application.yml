@@ -8,11 +8,21 @@ spring:
     username: webdb
     password: sn18320110405
     driver-class-name: com.mysql.jdbc.Driver
-  cache:
-    ehcache:
-      config: ehcache.xml
 mybatis:
   type-aliases-package: com.facerecog.pojo
-  mapper-locations: mapper/*.xml
-  configuration:
-    map-underscore-to-camel-case: true #支持驼峰式命名
+  mapper-locations: classpath:mapper/*.xml
+  config-location: classpath:config/config-mybatis.xml
+
+# 拦截路径
+facerecog:
+  filter:
+    webExcludePaths:
+      - /user/login
+      - /user/nologin
+      - /user/register
+      - /ws
+      - /app/**
+    appExcludePaths:
+      - /app/device_register
+      - /app/current_date
+      - /app/disconnect
