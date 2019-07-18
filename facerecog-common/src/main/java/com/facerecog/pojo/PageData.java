@@ -1,8 +1,6 @@
 package com.facerecog.pojo;
 
 
-import com.github.pagehelper.PageInfo;
-
 import java.util.List;
 
 /**
@@ -11,7 +9,7 @@ import java.util.List;
  * @Date 2018/12/12 13:33
  * @Created by cjw
  */
-public class PageData<T> extends PageInfo<T> {
+public class PageData<T> extends PageSerializable<T> {
     public PageData(List<T> list) {
         super(list);
     }
