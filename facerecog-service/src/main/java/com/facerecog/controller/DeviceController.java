@@ -14,6 +14,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @Classname DeviceController
  * @Description
@@ -44,6 +47,23 @@ public class DeviceController extends WebBaseController {
     public ResultData<PageData<ParamData>> inactList() {
         try {
             return mDeviceService.getInActDeviceList(paramDataInit());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping("/all_list")
+    public ResultData<List<PageData<ParamData>>> allList() {
+        try {
+            ResultData<PageData<ParamData>> device = mDeviceService.getDeviceList(paramDataInit());
+            ResultData<PageData<ParamData>> inActDevice = mDeviceService.getInActDeviceList(paramDataInit());
+
+            List<PageData<ParamData>> list = new ArrayList();
+            list.add(inActDevice.getData());
+            list.add(device.getData());
+            return new ResultData<>(HandleEnum.SUCCESS, list);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResultData<>(HandleEnum.FAIL, e.getMessage());
@@ -131,7 +151,7 @@ public class DeviceController extends WebBaseController {
 
     @ResponseBody
     @RequestMapping("/group_device_list")
-    public ResultData<ParamData> groupDeviceList(){
+    public ResultData<ParamData> groupDeviceList() {
         try {
             return mDeviceService.getGroupDeviceList(paramDataInit());
         } catch (Exception e) {
