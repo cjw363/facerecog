@@ -14,6 +14,12 @@ mybatis:
   type-aliases-package: com.facerecog.pojo
   mapper-locations: classpath:mapper/*.xml
   config-location: classpath:config/config-mybatis.xml
+pagehelper:
+  offsetAsPageNum: true
+  rowBoundsWithCount: true
+  reasonable: true
+  params: count=countSql
+  page-size-zero: true
 
 # 拦截路径
 facerecog:
