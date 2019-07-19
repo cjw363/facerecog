@@ -31,7 +31,7 @@ facerecog:
       - /ws
       - /app/**
       - /static/**
-      - /index.html*
+      - /index.html
     appExcludePaths:
       - /app/device_register
       - /app/current_date
