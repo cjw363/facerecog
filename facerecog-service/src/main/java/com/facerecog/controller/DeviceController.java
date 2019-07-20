@@ -93,16 +93,16 @@ public class DeviceController extends WebBaseController {
         return "device/device_inact_detail";
     }
 
+    @ResponseBody
     @RequestMapping("/detail")
-    public String detail(Model model) {
+    public ResultData<ParamData> detail() {
         try {
             ParamData data = mDeviceService.queryDevice(paramDataInit());
-            model.addAttribute(CommConst.DATA, data.toJsonString());
+            return new ResultData<>(HandleEnum.SUCCESS, data);
         } catch (Exception e) {
             e.printStackTrace();
+            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
         }
-
-        return "device/device_detail";
     }
 
     @ResponseBody
