@@ -21,8 +21,9 @@ pagehelper:
   params: count=countSql
   page-size-zero: true
 
-# 拦截路径
+# 自定义配置
 facerecog:
+  # 拦截路径
   filter:
     webExcludePaths:
       - /user/login
@@ -36,3 +37,6 @@ facerecog:
       - /app/device_register
       - /app/current_date
       - /app/disconnect
+  activatekey:
+    arcSoftAppID: 'Co4RfcU3B6v2s9MvHWYtzJv2JAqmJwWgc9j1pGmNEgeu'
+    arcSoftSdkKey: '7ijdL3ip6mS5bqx49jHZwz6CwK3osoznwCa6YPrkH5Dx'

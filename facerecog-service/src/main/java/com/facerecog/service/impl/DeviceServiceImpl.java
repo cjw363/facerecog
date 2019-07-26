@@ -2,6 +2,7 @@ package com.facerecog.service.impl;
 
 import com.facerecog.bo.AppDevice;
 import com.facerecog.bo.UserInfo;
+import com.facerecog.config.properties.KeyProperties;
 import com.facerecog.dao.DeviceDao;
 import com.facerecog.dao.GroupDao;
 import com.facerecog.dao.PersonDao;
@@ -21,6 +22,7 @@ import com.facerecog.websocket.SocketMessageHandle;
 import com.github.pagehelper.PageHelper;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.socket.TextMessage;
@@ -38,6 +40,7 @@ import javax.annotation.Resource;
  * @Created by cjw
  */
 @Service
+@EnableConfigurationProperties(KeyProperties.class)
 public class DeviceServiceImpl implements DeviceService {
 
     private static final int STATUS_1_DEVICE_ONLINE = 1;
@@ -57,6 +60,8 @@ public class DeviceServiceImpl implements DeviceService {
     private AppCache mAppCache;
     @Autowired
     private SocketMessageHandle mSocketMessageHandle;
+    @Autowired
+    private KeyProperties mKeyProperties;
 
     @Override
     public ResultData<PageData<ParamData>> getDeviceList(ParamData pd) {
@@ -111,7 +116,10 @@ public class DeviceServiceImpl implements DeviceService {
 
     @Override
     public ParamData queryInActDevice(ParamData pd) {
-        return mDeviceDao.selectInActDevice(pd);
+        ParamData data = mDeviceDao.selectInActDevice(pd);
+        data.put("arcface_appid",mKeyProperties.getArcSoftAppID());
+        data.put("arcface_sdkkey",mKeyProperties.getArcSoftSdkKey());
+        return data;
     }
 
     @Override

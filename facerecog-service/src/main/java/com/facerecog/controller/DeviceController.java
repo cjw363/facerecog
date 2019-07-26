@@ -6,11 +6,9 @@ import com.facerecog.pojo.PageData;
 import com.facerecog.pojo.ParamData;
 import com.facerecog.pojo.ResultData;
 import com.facerecog.service.interf.DeviceService;
-import com.facerecog.utils.CommConst;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -81,16 +79,16 @@ public class DeviceController extends WebBaseController {
         }
     }
 
+    @ResponseBody
     @RequestMapping("/inact_detail")
-    public String inactDetail(Model model) {
+    public ResultData<ParamData> inactDetail() {
         try {
-            ParamData paramData = mDeviceService.queryInActDevice(paramDataInit());
-            model.addAttribute(CommConst.DATA, paramData);
+            ParamData data = mDeviceService.queryInActDevice(paramDataInit());
+            return new ResultData<>(HandleEnum.SUCCESS, data);
         } catch (Exception e) {
             e.printStackTrace();
+            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
         }
-
-        return "device/device_inact_detail";
     }
 
     @ResponseBody
