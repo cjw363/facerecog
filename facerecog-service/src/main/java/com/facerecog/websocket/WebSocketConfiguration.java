@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
@@ -21,9 +21,9 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
  */
 @Configuration
 @EnableWebSocket
-public class WebSocketConfiguration extends WebMvcConfigurationSupport implements WebSocketConfigurer {
+public class WebSocketConfiguration implements WebMvcConfigurer, WebSocketConfigurer {
 
-    private static final Logger LOGGER= LoggerFactory.getLogger(WebSocketConfiguration.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(WebSocketConfiguration.class);
 
     //需要用注入的方式，SocketMessageHandle才能交给spring管理
     @Autowired
@@ -31,7 +31,7 @@ public class WebSocketConfiguration extends WebMvcConfigurationSupport implement
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        LOGGER.info("websocke配置");
+        LOGGER.info("websocket配置");
         registry.addHandler(handle, SystemConfig.WEB_SOCKET_URL).addInterceptors(new WebSocketInterceptor());
     }
 }

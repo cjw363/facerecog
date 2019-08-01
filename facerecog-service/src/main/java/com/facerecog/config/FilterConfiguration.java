@@ -9,11 +9,11 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableConfigurationProperties(FilterProperties.class)
-public class FilterConfiguration extends WebMvcConfigurationSupport {
+public class FilterConfiguration implements WebMvcConfigurer {
     @Autowired
     private WebInterceptor mWebInterceptor;
 
