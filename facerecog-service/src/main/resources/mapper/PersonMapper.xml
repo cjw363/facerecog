@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ts.cpfr.dao.PersonDao">
+<mapper namespace="com.facerecog.dao.PersonDao">
 	<select id="selectPerson" parameterType="pd" resultType="pd">
 		SELECT p.person_id,p.person_name,p.emp_number,p.add_time,i.blob_image base_image from tbl_#{wid}_person p left join tbl_#{wid}_image i on p.image_id=i.image_id where p.person_id=#{person_id} and p.status &lt;&gt; 3
 	</select>
