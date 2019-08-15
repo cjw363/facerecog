@@ -18,6 +18,9 @@ public class FrCorsConfiguration {
         config.addAllowedOrigin("http://152.136.134.235");
         config.addAllowedOrigin("http://152.136.134.235:9090");
         config.addAllowedOrigin("http://152.136.134.235:9091");
+        config.addAllowedOrigin("http://www.cjw363.cn");
+        config.addAllowedOrigin("http://www.cjw363.cn:9090");
+        config.addAllowedOrigin("http://www.cjw363.cn:9091");
         //2) 是否发送Cookie信息
         config.setAllowCredentials(true);
         //3) 允许的请求方式 GET POST DELETE...
