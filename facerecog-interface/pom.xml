@@ -12,5 +12,10 @@
 	<groupId>com.facerecog.interface</groupId>
 	<artifactId>facerecog-interface</artifactId>
 
-
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+	</dependencies>
 </project>

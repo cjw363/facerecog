@@ -2,6 +2,8 @@ server:
   port: 9090 #指定端口
   servlet:
     context-path: '/cpfr'
+    session:
+      timeout: 720
 spring:
   application:
     name: facerecog-service

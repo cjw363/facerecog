@@ -2,10 +2,38 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.facerecog.dao.UserDao">
-    <select id="selectUserMapByName" parameterType="pd" resultType="com.facerecog.bo.UserInfo">
-        select user_id,wid,name,password
+    <resultMap id="userMap" type="com.facerecog.bo.UserInfo">
+        <result column="user_id" property="userId"/>
+        <collection column="user_id" property="roleList"
+                    select="com.facerecog.dao.UserDao.selectRoleListByUserID">
+        </collection>
+    </resultMap>
+    <select id="selectUserMapByName" parameterType="pd" resultMap="userMap">
+        select user_id,wid,name,password,enabled
         from tbl_user
         where name = #{name}
+    </select>
+
+    <select id="selectRoleListByUserID" parameterType="int" resultType="com.facerecog.bo.Role">
+        SELECT r.role_id,r.role_name,r.role_desc FROM tbl_role r RIGHT JOIN tbl_user_role ur ON r.role_id=ur.role_id WHERE ur.user_id=#{user_id}
+    </select>
+
+    <resultMap id="permisMap" type="com.facerecog.bo.Permission">
+        <result column="permission_id" property="permissionId"/>
+        <collection column="permission_id" property="roleList"
+                    select="com.facerecog.dao.UserDao.selectRoleListByPermisID">
+        </collection>
+    </resultMap>
+    <select id="selectPermissionListMap" resultMap="permisMap">
+        SELECT * FROM tbl_permission
+    </select>
+
+    <select id="selectRoleListByPermisID" parameterType="int" resultType="com.facerecog.bo.Role">
+         SELECT r.role_id,r.role_name,r.role_desc FROM tbl_role r RIGHT JOIN tbl_role_permission rp ON r.role_id=rp.role_id WHERE rp.permission_id=#{permission_id}
+    </select>
+
+    <select id="selectRoleNameListByUrl" parameterType="string" resultType="string">
+         SELECT r.role_name FROM tbl_role r RIGHT JOIN tbl_role_permission rp ON r.role_id=rp.role_id WHERE rp.permission_id=(select permission_id from tbl_permission where url=#{url})
     </select>
 
     <update id="insertUser" parameterType="pd">

@@ -26,16 +26,16 @@ public class UserController extends WebBaseController {
     @Autowired
     private UserService mUserService;
 
-    @ResponseBody
-    @RequestMapping("/login")
-    public ResultData<ParamData> login(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            return mUserService.login(paramDataInit(), request, response);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
-    }
+//    @ResponseBody
+//    @RequestMapping("/login")
+//    public ResultData<ParamData> login(HttpServletRequest request, HttpServletResponse response) {
+//        try {
+//            return mUserService.login(paramDataInit(), request, response);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
+//        }
+//    }
 
     @ResponseBody
     @RequestMapping("/register")
