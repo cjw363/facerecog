@@ -36,6 +36,11 @@
          SELECT r.role_name FROM tbl_role r RIGHT JOIN tbl_role_permission rp ON r.role_id=rp.role_id WHERE rp.permission_id=(select permission_id from tbl_permission where url=#{url})
     </select>
 
+    <!-- 调用存储过程 -->
+    <select id="proSelectRoleNameListByUrl" statementType="CALLABLE" parameterType="string" resultType="string">
+            call pro_selectRoleNameListByUrl(#{url,mode=IN,jdbcType=VARCHAR});
+    </select>
+
     <update id="insertUser" parameterType="pd">
         INSERT INTO tbl_user(name, password, permission_level, register_time)
         VALUES (#{name}, #{password}, 0, now());

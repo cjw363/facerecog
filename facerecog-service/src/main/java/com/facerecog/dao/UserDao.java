@@ -33,4 +33,6 @@ public interface UserDao {
     List<Role> selectRoleListByPermisID(int permissionId);
 
     List<String> selectRoleNameListByUrl(String url);
+
+    List<String> proSelectRoleNameListByUrl(String url);
 }
