@@ -4,6 +4,9 @@ server:
     context-path: '/cpfr'
     session:
       timeout: 720
+logging:
+  level:
+    root: info
 spring:
   application:
     name: facerecog-service
