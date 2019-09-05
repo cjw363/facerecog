@@ -8,10 +8,10 @@ import com.facerecog.utils.TokenProcessor;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.Element;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PreDestroy;
+import javax.annotation.Resource;
 
 /**
  * Created by Administrator on 2018/1/4.
@@ -19,7 +19,7 @@ import javax.annotation.PreDestroy;
 @Component
 public class WebCache {
 
-    @Autowired
+    @Resource(name = "myCache")
     private Cache ehcache;
 
     /**

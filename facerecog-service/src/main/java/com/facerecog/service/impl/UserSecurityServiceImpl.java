@@ -24,7 +24,7 @@ public class UserSecurityServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         ParamData pd = new ParamData<>();
-        pd.put("name",userName);
+        pd.put("name", userName);
         return mUserDao.selectUserMapByName(pd);
     }
 }

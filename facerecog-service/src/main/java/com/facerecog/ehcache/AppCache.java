@@ -7,10 +7,10 @@ import net.sf.ehcache.Cache;
 import net.sf.ehcache.Element;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PreDestroy;
+import javax.annotation.Resource;
 
 /**
  * @Classname AppMemory
@@ -21,7 +21,7 @@ import javax.annotation.PreDestroy;
 @Component
 public class AppCache {
 
-    @Autowired
+    @Resource(name = "myCache")
     private Cache ehcache;
 
     /**
