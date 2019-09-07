@@ -4,6 +4,7 @@ import com.facerecog.annot.NoRepeatSubmit;
 import com.facerecog.pojo.HandleEnum;
 import com.facerecog.pojo.ResultData;
 
+import net.minidev.json.JSONObject;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.Element;
 
@@ -39,7 +40,7 @@ public class NoRepeatSubmitAop {
             ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
             String sessionId = RequestContextHolder.getRequestAttributes().getSessionId();
             HttpServletRequest request = attributes.getRequest();
-            String key = sessionId + "-" + request.getServletPath();
+            String key = sessionId + "-" + request.getServletPath()+"-"+ JSONObject.toJSONString(request.getParameterMap());
             if (cache.get(key) == null) {// 如果缓存中有这个url视为重复提交
                 Object o = pjp.proceed();
                 cache.put(new Element(key, 0));
