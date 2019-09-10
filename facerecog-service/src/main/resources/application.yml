@@ -18,6 +18,13 @@ spring:
   redis:
     host: 152.136.134.235
     password: 363
+  rabbitmq:
+    host: 152.136.134.235
+    username: cjw
+    password: 363
+    virtual-host: /vh_cjw
+    template:
+      exchange: facerecog.test.exchange #不配置 默认交换机名称
 mybatis:
   type-aliases-package: com.facerecog.pojo
   mapper-locations: classpath:mapper/*.xml
