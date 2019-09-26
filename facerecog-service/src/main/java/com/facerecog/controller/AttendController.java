@@ -10,6 +10,7 @@ import com.facerecog.service.interf.AttendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
  * @Created by xwr
  */
 @Controller
-@RequestMapping("/attend")
+@RequestMapping(value = "/attend", method = {RequestMethod.POST, RequestMethod.GET})
 public class AttendController extends WebBaseController {
     @Autowired
     private AttendService mAttendService;

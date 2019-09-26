@@ -57,6 +57,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
           .and().formLogin().loginProcessingUrl("/user/login").usernameParameter("name").passwordParameter("password").permitAll().failureHandler(mSecFailureHandler).successHandler(mSecSuccessHandler)
           .and().logout().permitAll()
           .and().sessionManagement().invalidSessionUrl("/user/nologin")
-          .and().csrf().disable().exceptionHandling().accessDeniedHandler(mSecAccessDeniedHandler);
+          .and().csrf().disable().exceptionHandling().authenticationEntryPoint((request, response, e) -> {
+              //未登录或者找不到资源 默认处理
+            request.getRequestDispatcher("/user/nologin").forward(request, response);
+        }).accessDeniedHandler(mSecAccessDeniedHandler);
     }
 }

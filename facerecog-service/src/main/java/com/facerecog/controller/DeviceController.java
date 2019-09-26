@@ -1,5 +1,6 @@
 package com.facerecog.controller;
 
+import com.facerecog.api.DeviceApi;
 import com.facerecog.controller.base.WebBaseController;
 import com.facerecog.pojo.HandleEnum;
 import com.facerecog.pojo.PageData;
@@ -10,6 +11,7 @@ import com.facerecog.service.interf.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
@@ -22,9 +24,9 @@ import java.util.List;
  * @Created by cjw
  */
 @Controller
-@RequestMapping("/device")
+@RequestMapping(value = "/device", method = {RequestMethod.POST, RequestMethod.GET})
 @SuppressWarnings({"rawtypes", "unchecked"})
-public class DeviceController extends WebBaseController {
+public class DeviceController extends WebBaseController implements DeviceApi {
 
     @Autowired
     private DeviceService mDeviceService;
