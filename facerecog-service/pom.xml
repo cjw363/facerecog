@@ -11,6 +11,8 @@
 
 	<groupId>com.facerecog.service</groupId>
 	<artifactId>facerecog-service</artifactId>
+	<!-- 打包war需要打开 -->
+<!--	<packaging>war</packaging>-->
 
 	<dependencies>
 		<dependency>
@@ -22,6 +24,13 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<!-- 移除嵌入式tomcat插件 打包war需要打开-->
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-tomcat</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<!-- mysql驱动 -->
 		<dependency>
@@ -102,6 +111,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-amqp</artifactId>
 			<version>2.1.7.RELEASE</version>
+		</dependency>
+		<!-- 添加servlet-api的依赖 打包war 需要打开 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 
