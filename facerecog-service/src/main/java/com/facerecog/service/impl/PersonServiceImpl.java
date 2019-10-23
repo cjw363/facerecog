@@ -19,7 +19,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.socket.TextMessage;
 
 import java.io.BufferedInputStream;
@@ -80,7 +80,7 @@ public class PersonServiceImpl implements PersonService {
 
     @Transactional
     @Override
-    public ResultData<ParamData> addPerson(CommonsMultipartFile file, ParamData pd) {
+    public ResultData<ParamData> addPerson(MultipartFile file, ParamData pd) throws IOException {
         if (file.getSize() / 1024 > 65)
             return new ResultData<>(HandleEnum.FAIL, "上传失败，图片过大!");
         if (!file.getContentType().contains("image"))
@@ -104,7 +104,7 @@ public class PersonServiceImpl implements PersonService {
 
     @Transactional
     @Override
-    public ResultData<ParamData> updatePerson(CommonsMultipartFile file, ParamData pd) throws IOException {
+    public ResultData<ParamData> updatePerson(MultipartFile file, ParamData pd) throws IOException {
         if (file.getSize() / 1024 > 65)
             return new ResultData<>(HandleEnum.FAIL, "上传失败，图片过大!");
         if (!file.getContentType().contains("image"))
@@ -181,7 +181,7 @@ public class PersonServiceImpl implements PersonService {
 
     @Transactional
     @Override
-    public boolean uploadImageFile(CommonsMultipartFile file, ParamData pd) throws Exception {
+    public boolean uploadImageFile(MultipartFile file, ParamData pd) throws Exception {
         BufferedOutputStream fos = null;
         try {
             String realPath = SystemConfig.UPLOAD_IMAGE_DIR;
@@ -284,10 +284,10 @@ public class PersonServiceImpl implements PersonService {
 
     @Transactional
     @Override
-    public ResultData<ParamData> batchUpload(CommonsMultipartFile[] files, ParamData pd) {
+    public ResultData<ParamData> batchUpload(MultipartFile[] files, ParamData pd) {
         for (int i = 0; i < files.length; i++) {
             try {
-                CommonsMultipartFile file = files[i];
+                MultipartFile file = files[i];
                 if ((file.getSize() / 1024) > 65)
                     continue;
 

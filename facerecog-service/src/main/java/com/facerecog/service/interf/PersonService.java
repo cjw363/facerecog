@@ -4,7 +4,7 @@ import com.facerecog.pojo.PageData;
 import com.facerecog.pojo.ParamData;
 import com.facerecog.pojo.ResultData;
 
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -22,9 +22,9 @@ public interface PersonService {
 
     ResultData<PageData<ParamData>> getPersonBase64List(ParamData pd);
 
-    ResultData<ParamData> addPerson(CommonsMultipartFile file, ParamData pd);
+    ResultData<ParamData> addPerson(MultipartFile file, ParamData pd) throws IOException;
 
-    ResultData<ParamData> updatePerson(CommonsMultipartFile file, ParamData pd) throws IOException;
+    ResultData<ParamData> updatePerson(MultipartFile file, ParamData pd) throws IOException;
 
     ResultData<ParamData> updatePerson(ParamData pd) throws IOException;
 
@@ -32,7 +32,7 @@ public interface PersonService {
 
     ParamData queryPerson(ParamData pd);
 
-    boolean uploadImageFile(CommonsMultipartFile file, ParamData pd) throws Exception;
+    boolean uploadImageFile(MultipartFile file, ParamData pd) throws Exception;
 
     void loadImageFile(ParamData pd, HttpServletResponse response) throws Exception;
 
@@ -46,7 +46,7 @@ public interface PersonService {
 
     ResultData<PageData<ParamData>> getAccessDeviceList(ParamData pd);
 
-    ResultData<ParamData> batchUpload(CommonsMultipartFile[] files, ParamData pd);
+    ResultData<ParamData> batchUpload(MultipartFile[] files, ParamData pd);
 
     ResultData<ParamData> getGroupPersonList(ParamData pd);
 

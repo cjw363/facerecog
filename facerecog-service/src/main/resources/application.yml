@@ -3,7 +3,7 @@ server:
   servlet:
     context-path: '/cpfr'
     session:
-      timeout: 720
+      timeout: PT12H
 logging:
   level:
     root: info
@@ -25,6 +25,9 @@ spring:
     virtual-host: /vh_cjw
     template:
       exchange: facerecog.test.exchange #不配置 默认交换机名称
+  servlet:
+    multipart:
+      enabled: true
 mybatis:
   type-aliases-package: com.facerecog.pojo
   mapper-locations: classpath:mapper/*.xml

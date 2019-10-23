@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -57,7 +57,7 @@ public class PersonController extends WebBaseController {
 
     @ResponseBody
     @RequestMapping("/add")
-    public ResultData<ParamData> add(@RequestParam("file") CommonsMultipartFile file, HttpServletRequest request) {
+    public ResultData<ParamData> add(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
         try {
             ParamData pd = paramDataInit();
             pd.put("person_name", request.getParameter("person_name"));
@@ -88,7 +88,7 @@ public class PersonController extends WebBaseController {
      */
     @ResponseBody
     @RequestMapping("/update_img_info")
-    public ResultData<ParamData> updatePersonInfoWithFile(@RequestParam("file") CommonsMultipartFile file, HttpServletRequest request) {
+    public ResultData<ParamData> updatePersonInfoWithFile(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
         try {
             ParamData pd = paramDataInit();
             pd.put("person_name", request.getParameter("person_name"));
@@ -167,7 +167,7 @@ public class PersonController extends WebBaseController {
 
     @ResponseBody
     @RequestMapping("/batch_upload")
-    public ResultData<ParamData> batchUpload(@RequestParam("file[]") CommonsMultipartFile[] files, HttpServletRequest request) {
+    public ResultData<ParamData> batchUpload(@RequestParam("file[]") MultipartFile[] files, HttpServletRequest request) {
         try {
             mPersonService.batchUpload(files, paramDataInit());
             return new ResultData<>(HandleEnum.SUCCESS);

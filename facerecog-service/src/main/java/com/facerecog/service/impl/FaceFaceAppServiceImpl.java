@@ -24,7 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Base64Utils;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -105,7 +105,7 @@ public class FaceFaceAppServiceImpl implements FaceAppService {
     @Transactional
     @Override
     @Deprecated
-    public ResultData<ParamData> addRecord(CommonsMultipartFile file, HttpServletRequest request) {
+    public ResultData<ParamData> addRecord(MultipartFile file, HttpServletRequest request) throws Exception{
         if (file.getSize() / 1024 > 65)
             return new ResultData<>(HandleEnum.FAIL, "上传失败，图片过大!");
         if (!file.getContentType().contains("image"))
@@ -145,7 +145,7 @@ public class FaceFaceAppServiceImpl implements FaceAppService {
     @Transactional
     @Override
     @Deprecated
-    public boolean uploadRecordImage(CommonsMultipartFile file, ParamData pd) throws Exception {
+    public boolean uploadRecordImage(MultipartFile file, ParamData pd) throws Exception {
         BufferedOutputStream fos = null;
         try {
             String realPath = SystemConfig.UPLOAD_RECORD_IMAGE_DIR;
@@ -181,7 +181,7 @@ public class FaceFaceAppServiceImpl implements FaceAppService {
     @Transactional
     @Override
     @Deprecated
-    public ResultData<ParamData> addPersonWithGrant(CommonsMultipartFile file, HttpServletRequest request) throws Exception {
+    public ResultData<ParamData> addPersonWithGrant(MultipartFile file, HttpServletRequest request) throws Exception {
         if (file.getSize() / 1024 > 65)
             return new ResultData<>(HandleEnum.FAIL, "上传失败，图片过大!");
         if (!file.getContentType().contains("image"))

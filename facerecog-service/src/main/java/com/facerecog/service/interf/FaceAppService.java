@@ -3,8 +3,11 @@ package com.facerecog.service.interf;
 
 import com.facerecog.pojo.ParamData;
 import com.facerecog.pojo.ResultData;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -23,15 +26,15 @@ public interface FaceAppService {
 
     ResultData<List<ParamData>> getGrantList(ParamData pd);
 
-    ResultData<ParamData> addRecord(CommonsMultipartFile file, HttpServletRequest request);
+    ResultData<ParamData> addRecord(MultipartFile file, HttpServletRequest request)throws Exception;
 
     ResultData<ParamData> addRecord(ParamData pd) throws Exception;
 
-    boolean uploadRecordImage(CommonsMultipartFile file, ParamData pd) throws Exception;
+    boolean uploadRecordImage(MultipartFile file, ParamData pd) throws Exception;
 
     ResultData<ParamData> getCurrentDate();
 
-    ResultData<ParamData> addPersonWithGrant(CommonsMultipartFile file, HttpServletRequest request) throws Exception;
+    ResultData<ParamData> addPersonWithGrant(MultipartFile file, HttpServletRequest request) throws Exception;
 
     ResultData<ParamData> addPersonWithGrant(ParamData pd) throws Exception;
 
