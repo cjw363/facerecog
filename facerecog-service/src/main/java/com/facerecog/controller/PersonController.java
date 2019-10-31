@@ -6,11 +6,9 @@ import com.facerecog.pojo.PageData;
 import com.facerecog.pojo.ParamData;
 import com.facerecog.pojo.ResultData;
 import com.facerecog.service.interf.PersonService;
-import com.facerecog.utils.CommConst;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
  * @Created by cjw
  */
 @Controller
-@RequestMapping(value = "/person",method = {RequestMethod.POST, RequestMethod.GET})
+@RequestMapping(value = "/person", method = {RequestMethod.POST, RequestMethod.GET})
 public class PersonController extends WebBaseController {
 
     @Autowired
@@ -69,15 +67,16 @@ public class PersonController extends WebBaseController {
         }
     }
 
+    @ResponseBody
     @RequestMapping("/detail")
-    public String detail(Model model, HttpServletRequest request) {
+    public ResultData<ParamData> detail() {
         try {
             ParamData paramData = mPersonService.queryPerson(paramDataInit());
-            model.addAttribute(CommConst.DATA, paramData.toJsonString());
+            return new ResultData<>(HandleEnum.SUCCESS, paramData);
         } catch (Exception e) {
             e.printStackTrace();
+            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
         }
-        return "person/person_detail";
     }
 
     /**
