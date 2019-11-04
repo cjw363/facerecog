@@ -1,13 +1,20 @@
 package com.facerecog.utils;
 
+import com.facerecog.pojo.ParamData;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
+import org.springframework.util.CollectionUtils;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 import java.util.UUID;
@@ -209,5 +216,25 @@ public class CommUtil {
 
         int index = str.indexOf(":");
         return "0 " + str.substring(index + 1, str.length()) + " " + str.substring(0, index) + " ? * " + time;
+    }
+
+    public static List getIntListFromObjList(List<ParamData> list, String key) {
+        if (CollectionUtils.isEmpty(list))
+            return null;
+        List<Integer> intList = new ArrayList<>();
+        list.forEach(p->intList.add((int) p.get(key)));
+        return intList;
+    }
+
+    public static String getProjectDlPath(){
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        if(request!=null){
+            String realPath = request.getServletContext().getRealPath("/");
+            String dlPath = realPath.replace("\\","/").replace(SystemConfig.PROJECT_NAME, "/dl");
+            File dr = new File(dlPath);
+            if(!dr.exists())dr.mkdirs();
+            return dlPath;
+        }
+        return null;
     }
 }

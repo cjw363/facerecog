@@ -48,14 +48,7 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public ParamData queryGroup(ParamData pd) {
-        ParamData group = mGroupDao.selectGroup(pd);
-        List<ParamData> personList = mPersonDao.selectPersonListByGroupID(pd);
-        List<ParamData> deviceList = mDeviceDao.selectDeviceListByGroupID(pd);
-        ParamData data = new ParamData();
-        data.put("group", group);
-        data.put("person_list", personList);
-        data.put("device_list", deviceList);
-        return data;
+        return mGroupDao.selectGroup(pd);
     }
 
     @Transactional

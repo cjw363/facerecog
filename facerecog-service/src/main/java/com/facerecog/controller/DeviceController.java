@@ -170,4 +170,15 @@ public class DeviceController extends WebBaseController implements DeviceApi {
             return new ResultData<>(HandleEnum.FAIL, e.getMessage());
         }
     }
+
+    @ResponseBody
+    @RequestMapping("/list_group_unselected")
+    public ResultData<List<ParamData>> listNoSelected() {
+        try {
+            return mDeviceService.getListGroupUnSelected(paramDataInit());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
+        }
+    }
 }

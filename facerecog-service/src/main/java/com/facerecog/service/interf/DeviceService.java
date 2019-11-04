@@ -4,6 +4,8 @@ import com.facerecog.pojo.PageData;
 import com.facerecog.pojo.ParamData;
 import com.facerecog.pojo.ResultData;
 
+import java.util.List;
+
 /**
  * @Classname DeviceService
  * @Description
@@ -38,4 +40,6 @@ public interface DeviceService {
     ResultData<PageData<ParamData>> getDeviceListByGroup(ParamData pd);
 
     void updateAllDeviceOffline();
+
+    ResultData<List<ParamData>> getListGroupUnSelected(ParamData pd);
 }

@@ -6,16 +6,12 @@ import com.facerecog.pojo.PageData;
 import com.facerecog.pojo.ParamData;
 import com.facerecog.pojo.ResultData;
 import com.facerecog.service.interf.GroupService;
-import com.facerecog.utils.CommConst;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @Classname GroupController
@@ -24,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
  * @Created by cjw
  */
 @Controller
-@RequestMapping(value = "/group",method = {RequestMethod.POST, RequestMethod.GET})
+@RequestMapping(value = "/group", method = {RequestMethod.POST, RequestMethod.GET})
 @SuppressWarnings({"rawtypes", "unchecked"})
 public class GroupController extends WebBaseController {
 
@@ -33,7 +29,7 @@ public class GroupController extends WebBaseController {
 
     @ResponseBody
     @RequestMapping("/list")
-    public ResultData<PageData<ParamData>> list(HttpServletRequest request) {
+    public ResultData<PageData<ParamData>> list() {
         try {
             return mGroupService.getGroupList(paramDataInit());
         } catch (Exception e) {
@@ -42,21 +38,21 @@ public class GroupController extends WebBaseController {
         }
     }
 
+    @ResponseBody
     @RequestMapping("/detail")
-    public String detail(Model model, HttpServletRequest request) {
+    public ResultData<ParamData> detail() {
         try {
             ParamData data = mGroupService.queryGroup(paramDataInit());
-            model.addAttribute(CommConst.DATA, data.toJsonString());
+            return new ResultData<>(HandleEnum.SUCCESS, data);
         } catch (Exception e) {
             e.printStackTrace();
+            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
         }
-
-        return "group/group_detail";
     }
 
     @ResponseBody
     @RequestMapping("/add")
-    public ResultData<ParamData> add(HttpServletRequest request) {
+    public ResultData<ParamData> add() {
         try {
             return mGroupService.addGroup(paramDataInit());
         } catch (Exception e) {
@@ -67,7 +63,7 @@ public class GroupController extends WebBaseController {
 
     @ResponseBody
     @RequestMapping("/add_person")
-    public ResultData<ParamData> addPerson(HttpServletRequest request) {
+    public ResultData<ParamData> addPerson() {
         try {
             return mGroupService.addGroupPerson(paramDataInit());
         } catch (Exception e) {
@@ -78,7 +74,7 @@ public class GroupController extends WebBaseController {
 
     @ResponseBody
     @RequestMapping("/add_device")
-    public ResultData<ParamData> addDevice(HttpServletRequest request) {
+    public ResultData<ParamData> addDevice() {
         try {
             return mGroupService.addGroupDevice(paramDataInit());
         } catch (Exception e) {
@@ -89,7 +85,7 @@ public class GroupController extends WebBaseController {
 
     @ResponseBody
     @RequestMapping("/update_info")
-    public ResultData<ParamData> updateInfo(HttpServletRequest request) {
+    public ResultData<ParamData> updateInfo() {
         try {
             return mGroupService.updateGroupInfo(paramDataInit());
         } catch (Exception e) {
@@ -100,7 +96,7 @@ public class GroupController extends WebBaseController {
 
     @ResponseBody
     @RequestMapping("/delete")
-    public ResultData<ParamData> delete(HttpServletRequest request) {
+    public ResultData<ParamData> delete() {
         try {
             return mGroupService.deleteGroup(paramDataInit());
         } catch (Exception e) {
@@ -111,7 +107,7 @@ public class GroupController extends WebBaseController {
 
     @ResponseBody
     @RequestMapping("/delete_person")
-    public ResultData<ParamData> deletePerson(HttpServletRequest request) {
+    public ResultData<ParamData> deletePerson() {
         try {
             return mGroupService.deleteGroupPerson(paramDataInit());
         } catch (Exception e) {
@@ -122,7 +118,7 @@ public class GroupController extends WebBaseController {
 
     @ResponseBody
     @RequestMapping("/delete_device")
-    public ResultData<ParamData> deleteDevice(HttpServletRequest request) {
+    public ResultData<ParamData> deleteDevice() {
         try {
             return mGroupService.deleteGroupDevice(paramDataInit());
         } catch (Exception e) {
