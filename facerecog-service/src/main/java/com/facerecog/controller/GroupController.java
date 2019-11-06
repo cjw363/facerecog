@@ -126,4 +126,15 @@ public class GroupController extends WebBaseController {
             return new ResultData<>(HandleEnum.FAIL, e.getMessage());
         }
     }
+
+    @ResponseBody
+    @RequestMapping("/list_device_person_by_group")
+    public ResultData<ParamData> listDevicePersonByGroup() {
+        try {
+            return mGroupService.getListDevicePersonByGroup(paramDataInit());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
+        }
+    }
 }

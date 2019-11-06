@@ -123,4 +123,14 @@ public class GroupServiceImpl implements GroupService {
         if (mGroupDao.deleteGroupDevice(pd)) return new ResultData<>(HandleEnum.SUCCESS);
         return new ResultData<>(HandleEnum.FAIL);
     }
+
+    @Override
+    public ResultData<ParamData> getListDevicePersonByGroup(ParamData pd) {
+        List<ParamData> deviceList = mDeviceDao.selectDeviceListByGroupID(pd);
+        List<ParamData> personList = mPersonDao.selectPersonListByGroupID(pd);
+        ParamData data = new ParamData<>();
+        data.put("device_list",deviceList);
+        data.put("person_list",personList);
+        return new ResultData<>(HandleEnum.SUCCESS,data);
+    }
 }

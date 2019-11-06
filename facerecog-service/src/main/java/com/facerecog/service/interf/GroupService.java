@@ -28,4 +28,6 @@ public interface GroupService {
     ResultData<ParamData> deleteGroupPerson(ParamData pd);
 
     ResultData<ParamData> deleteGroupDevice(ParamData pd);
+
+    ResultData<ParamData> getListDevicePersonByGroup(ParamData pd);
 }
