@@ -3,6 +3,7 @@ package com.facerecog.service.impl;
 
 import com.facerecog.dao.DeviceDao;
 import com.facerecog.dao.GrantDao;
+import com.facerecog.dao.PersonDao;
 import com.facerecog.ehcache.WebCache;
 import com.facerecog.pojo.HandleEnum;
 import com.facerecog.pojo.ParamData;
@@ -11,12 +12,15 @@ import com.facerecog.pojo.SocketEnum;
 import com.facerecog.service.interf.GrantService;
 import com.facerecog.utils.CommConst;
 import com.facerecog.websocket.SocketMessageHandle;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.socket.TextMessage;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.annotation.Resource;
 
 /**
@@ -32,6 +36,8 @@ public class GrantServiceImpl implements GrantService {
     private GrantDao mGrantDao;
     @Resource
     private DeviceDao mDeviceDao;
+    @Resource
+    private PersonDao mPersonDao;
     @Autowired
     private WebCache memory;
     @Autowired
@@ -113,5 +119,15 @@ public class GrantServiceImpl implements GrantService {
             return new ResultData<>(HandleEnum.SUCCESS);
         }
         return new ResultData<>(HandleEnum.FAIL);
+    }
+
+    @Override
+    public ResultData<ParamData> getListDevicePerson(ParamData pd) {
+        List<ParamData> deviceList = mDeviceDao.selectDeviceList(pd);
+        List<ParamData> personList = mPersonDao.selectPersonList(pd);
+        ParamData data = new ParamData<>();
+        data.put("device_list", deviceList);
+        data.put("person_list", personList);
+        return new ResultData<>(HandleEnum.SUCCESS, data);
     }
 }

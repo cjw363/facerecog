@@ -49,4 +49,15 @@ public class GrantController extends WebBaseController {
             return new ResultData<>(HandleEnum.FAIL, e.getMessage());
         }
     }
+
+    @ResponseBody
+    @RequestMapping("/list_device_person")
+    public ResultData<ParamData> listDevicePerson(HttpServletRequest request) {
+        try {
+            return mGrantService.getListDevicePerson(paramDataInit());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
+        }
+    }
 }

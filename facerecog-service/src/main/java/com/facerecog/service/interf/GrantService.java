@@ -13,4 +13,6 @@ public interface GrantService {
     ResultData<ParamData> addGrant(ParamData pd) throws Exception;
 
     ResultData<ParamData> banGrant(ParamData pd) throws Exception;
+
+    ResultData<ParamData> getListDevicePerson(ParamData pd);
 }
