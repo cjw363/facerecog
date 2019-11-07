@@ -58,7 +58,7 @@ public class SecSuccessHandler implements AuthenticationSuccessHandler {
         mUserDao.updateUserLoginTime(paramData);
 
         PrintWriter out = response.getWriter();
-        ResultData resultData = new ResultData<>(HandleEnum.SUCCESS);
+        ResultData resultData = new ResultData<>(HandleEnum.SUCCESS,userInfo);
         String jsonData = JsonUtils.serialize(resultData);
         if(!StringUtils.isEmpty(jsonData))
             out.write(jsonData);
