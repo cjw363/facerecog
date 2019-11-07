@@ -30,7 +30,7 @@ import javax.annotation.Resource;
  * @Created by cjw
  */
 @Service
-public class ManagerAppAppServiceImpl implements ManagerAppService {
+public class ManagerAppServiceImpl implements ManagerAppService {
 
     @Resource
     private PersonDao mPersonDao;
