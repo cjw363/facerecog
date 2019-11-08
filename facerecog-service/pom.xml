@@ -12,7 +12,7 @@
 	<groupId>com.facerecog.service</groupId>
 	<artifactId>facerecog-service</artifactId>
 	<!-- 打包war需要打开 -->
-<!--	<packaging>war</packaging>-->
+	<packaging>war</packaging>
 
 	<dependencies>
 		<dependency>

@@ -11,12 +11,12 @@ spring:
   application:
     name: facerecog-service
   datasource:
-    url: jdbc:mysql://152.136.134.235:3306/db_facerecog?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true
-    username: cjw
-    password: 363
-#    url: jdbc:mysql://132.232.108.138:3030/frdb?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true
-#    username: webdb
-#    password: sn18320110405
+#    url: jdbc:mysql://152.136.134.235:3306/db_facerecog?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true
+#    username: cjw
+#    password: 363
+    url: jdbc:mysql://132.232.108.138:3030/frdb?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true
+    username: webdb
+    password: sn18320110405
 #    url: jdbc:mysql://127.0.0.1:3306/frdb?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true
 #    username: root
 #    password: root
