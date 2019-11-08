@@ -13,11 +13,15 @@ public class FrCorsConfiguration {
         //1.添加CORS配置信息
         CorsConfiguration config = new CorsConfiguration();
         //1) 允许的域,不要写*，否则cookie就无法使用了
+        config.addAllowedOrigin("http://127.0.0.1:8080");
         config.addAllowedOrigin("http://127.0.0.1:9091");
+        config.addAllowedOrigin("http://localhost:8080");
         config.addAllowedOrigin("http://localhost:9091");
         config.addAllowedOrigin("http://152.136.134.235");
         config.addAllowedOrigin("http://152.136.134.235:9090");
         config.addAllowedOrigin("http://152.136.134.235:9091");
+        config.addAllowedOrigin("http://132.232.108.138");
+        config.addAllowedOrigin("http://132.232.108.138:8080");
         config.addAllowedOrigin("http://www.cjw363.cn");
         config.addAllowedOrigin("http://www.cjw363.cn:9090");
         config.addAllowedOrigin("http://www.cjw363.cn:9091");
