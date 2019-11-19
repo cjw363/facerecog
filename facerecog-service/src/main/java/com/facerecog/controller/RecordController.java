@@ -1,7 +1,6 @@
 package com.facerecog.controller;
 
 import com.facerecog.controller.base.WebBaseController;
-import com.facerecog.pojo.HandleEnum;
 import com.facerecog.pojo.PageData;
 import com.facerecog.pojo.ParamData;
 import com.facerecog.pojo.ResultData;
@@ -22,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
  * @Created by cjw
  */
 @Controller
-@RequestMapping(value = "/record",method = {RequestMethod.POST, RequestMethod.GET})
+@RequestMapping(value = "/record", method = {RequestMethod.POST, RequestMethod.GET})
 public class RecordController extends WebBaseController {
 
     @Autowired
@@ -31,13 +30,7 @@ public class RecordController extends WebBaseController {
     @ResponseBody
     @RequestMapping("/list_base64")
     public ResultData<PageData<ParamData>> listBase64(HttpServletRequest request) {
-        try {
-            return mRecordService.getRecordBase64List(paramDataInit());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
-
+        return mRecordService.getRecordBase64List(paramDataInit());
     }
 
     /**
@@ -49,12 +42,7 @@ public class RecordController extends WebBaseController {
     @ResponseBody
     @RequestMapping("/delete")
     public ResultData<ParamData> delete(HttpServletRequest request) {
-        try {
-            return mRecordService.deleteRecord(paramDataInit());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
+        return mRecordService.deleteRecord(paramDataInit());
     }
 
     /**
@@ -66,12 +54,7 @@ public class RecordController extends WebBaseController {
     @ResponseBody
     @RequestMapping("/deleteLists")
     public ResultData<ParamData> deleteLists(HttpServletRequest request) {
-        try {
-            return mRecordService.deleteRecordLists(paramDataInit());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
+        return mRecordService.deleteRecordLists(paramDataInit());
     }
 
 
@@ -83,11 +66,6 @@ public class RecordController extends WebBaseController {
     @ResponseBody
     @RequestMapping("/clear")
     public ResultData<ParamData> clear(HttpServletRequest request) {
-        try {
-            return mRecordService.clearRecord(paramDataInit());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
+        return mRecordService.clearRecord(paramDataInit());
     }
 }

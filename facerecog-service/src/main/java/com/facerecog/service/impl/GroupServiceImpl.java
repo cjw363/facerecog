@@ -4,7 +4,7 @@ import com.facerecog.dao.DeviceDao;
 import com.facerecog.dao.GroupDao;
 import com.facerecog.dao.PersonDao;
 import com.facerecog.ehcache.WebCache;
-import com.facerecog.pojo.HandleEnum;
+import com.facerecog.pojo.ResultEnum;
 import com.facerecog.pojo.PageData;
 import com.facerecog.pojo.ParamData;
 import com.facerecog.pojo.ResultData;
@@ -43,7 +43,7 @@ public class GroupServiceImpl implements GroupService {
 
         if (pageSize != 0) PageHelper.startPage(pageNum, pageSize);
         List<ParamData> groupList = mGroupDao.selectGroupList(pd);
-        return new ResultData<>(HandleEnum.SUCCESS, new PageData<>(groupList));
+        return new ResultData<>(ResultEnum.SUCCESS, new PageData<>(groupList));
     }
 
     @Override
@@ -54,8 +54,8 @@ public class GroupServiceImpl implements GroupService {
     @Transactional
     @Override
     public ResultData<ParamData> addGroup(ParamData pd) {
-        if (mGroupDao.insertGroup(pd)) return new ResultData<>(HandleEnum.SUCCESS);
-        else return new ResultData<>(HandleEnum.FAIL);
+        if (mGroupDao.insertGroup(pd)) return new ResultData<>(ResultEnum.SUCCESS);
+        else return new ResultData<>(ResultEnum.FAIL);
     }
 
     @Transactional
@@ -73,8 +73,8 @@ public class GroupServiceImpl implements GroupService {
         }
         pd.put("list", list);
 
-        if (mGroupDao.insertGroupPerson(pd)) return new ResultData<>(HandleEnum.SUCCESS);
-        else return new ResultData<>(HandleEnum.FAIL);
+        if (mGroupDao.insertGroupPerson(pd)) return new ResultData<>(ResultEnum.SUCCESS);
+        else return new ResultData<>(ResultEnum.FAIL);
     }
 
     @Transactional
@@ -92,36 +92,36 @@ public class GroupServiceImpl implements GroupService {
         }
         pd.put("list", list);
 
-        if (mGroupDao.insertGroupDevice(pd)) return new ResultData<>(HandleEnum.SUCCESS);
-        else return new ResultData<>(HandleEnum.FAIL);
+        if (mGroupDao.insertGroupDevice(pd)) return new ResultData<>(ResultEnum.SUCCESS);
+        else return new ResultData<>(ResultEnum.FAIL);
     }
 
     @Transactional
     @Override
     public ResultData<ParamData> updateGroupInfo(ParamData pd) {
-        if (mGroupDao.updateGroupInfo(pd)) return new ResultData<>(HandleEnum.SUCCESS);
-        return new ResultData<>(HandleEnum.FAIL);
+        if (mGroupDao.updateGroupInfo(pd)) return new ResultData<>(ResultEnum.SUCCESS);
+        return new ResultData<>(ResultEnum.FAIL);
     }
 
     @Transactional
     @Override
     public ResultData<ParamData> deleteGroup(ParamData pd) {
-        if (mGroupDao.deleteGroup(pd)) return new ResultData<>(HandleEnum.SUCCESS);
-        return new ResultData<>(HandleEnum.FAIL);
+        if (mGroupDao.deleteGroup(pd)) return new ResultData<>(ResultEnum.SUCCESS);
+        return new ResultData<>(ResultEnum.FAIL);
     }
 
     @Transactional
     @Override
     public ResultData<ParamData> deleteGroupPerson(ParamData pd) {
-        if (mGroupDao.deleteGroupPerson(pd)) return new ResultData<>(HandleEnum.SUCCESS);
-        return new ResultData<>(HandleEnum.FAIL);
+        if (mGroupDao.deleteGroupPerson(pd)) return new ResultData<>(ResultEnum.SUCCESS);
+        return new ResultData<>(ResultEnum.FAIL);
     }
 
     @Transactional
     @Override
     public ResultData<ParamData> deleteGroupDevice(ParamData pd) {
-        if (mGroupDao.deleteGroupDevice(pd)) return new ResultData<>(HandleEnum.SUCCESS);
-        return new ResultData<>(HandleEnum.FAIL);
+        if (mGroupDao.deleteGroupDevice(pd)) return new ResultData<>(ResultEnum.SUCCESS);
+        return new ResultData<>(ResultEnum.FAIL);
     }
 
     @Override
@@ -131,6 +131,6 @@ public class GroupServiceImpl implements GroupService {
         ParamData data = new ParamData<>();
         data.put("device_list",deviceList);
         data.put("person_list",personList);
-        return new ResultData<>(HandleEnum.SUCCESS,data);
+        return new ResultData<>(ResultEnum.SUCCESS,data);
     }
 }

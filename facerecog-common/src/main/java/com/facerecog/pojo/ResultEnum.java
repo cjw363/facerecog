@@ -1,7 +1,7 @@
 package com.facerecog.pojo;
 
 
-public enum HandleEnum {
+public enum ResultEnum implements ResultCode{
     FAIL(-1,"操作异常"),
     SUCCESS(0,"操作成功"),
     ADMIN_EXISTED_100(100,"该管理员用户已注册"),
@@ -10,12 +10,14 @@ public enum HandleEnum {
     ADMIN_NOT_EXIST_103(103,"没有该管理员用户"),
     PASSWORD_ERROR_104(104,"密码错误"),
     NEW_APP_VERSION_105(105,"发现新版本APP"),
+    INVALID_PARAM(106,"非法参数！"),
+    SERVER_ERROR(999,"抱歉，系统繁忙，请稍后重试！"),
     ;
 
     private int code;
     private String message;
 
-    HandleEnum(int code, String message) {
+    ResultEnum(int code, String message) {
         this.code = code;
         this.message = message;
     }
@@ -28,8 +30,8 @@ public enum HandleEnum {
 		return message;
 	}
 
-	public static HandleEnum codeOf(int index){
-        for (HandleEnum code : values()){
+	public static ResultEnum codeOf(int index){
+        for (ResultEnum code : values()){
             if (code.getCode()==index){
                 return code;
             }

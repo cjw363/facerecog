@@ -1,7 +1,7 @@
 package com.facerecog.controller;
 
 import com.facerecog.controller.base.WebBaseController;
-import com.facerecog.pojo.HandleEnum;
+import com.facerecog.pojo.ResultEnum;
 import com.facerecog.pojo.PageData;
 import com.facerecog.pojo.ParamData;
 import com.facerecog.pojo.ResultData;
@@ -36,49 +36,29 @@ public class PersonController extends WebBaseController {
     @ResponseBody
     @RequestMapping("/list")
     public ResultData<PageData<ParamData>> list(HttpServletRequest request) {
-        try {
-            return mPersonService.getPersonList(paramDataInit());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
+        return mPersonService.getPersonList(paramDataInit());
     }
 
     @ResponseBody
     @RequestMapping("/list_base64")
     public ResultData<PageData<ParamData>> listBase64(HttpServletRequest request) {
-        try {
-            return mPersonService.getPersonBase64List(paramDataInit());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
+        return mPersonService.getPersonBase64List(paramDataInit());
     }
 
     @ResponseBody
     @RequestMapping("/add")
-    public ResultData<ParamData> add(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
-        try {
-            ParamData pd = paramDataInit();
-            pd.put("person_name", request.getParameter("person_name"));
-            pd.put("emp_number", request.getParameter("emp_number"));
-            return mPersonService.addPerson(file, pd);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
+    public ResultData<ParamData> add(@RequestParam("file") MultipartFile file, HttpServletRequest request) throws Exception {
+        ParamData pd = paramDataInit();
+        pd.put("person_name", request.getParameter("person_name"));
+        pd.put("emp_number", request.getParameter("emp_number"));
+        return mPersonService.addPerson(file, pd);
     }
 
     @ResponseBody
     @RequestMapping("/detail")
     public ResultData<ParamData> detail() {
-        try {
-            ParamData paramData = mPersonService.queryPerson(paramDataInit());
-            return new ResultData<>(HandleEnum.SUCCESS, paramData);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
+        ParamData paramData = mPersonService.queryPerson(paramDataInit());
+        return new ResultData<>(ResultEnum.SUCCESS, paramData);
     }
 
     /**
@@ -89,17 +69,12 @@ public class PersonController extends WebBaseController {
      */
     @ResponseBody
     @RequestMapping("/update_img_info")
-    public ResultData<ParamData> updatePersonInfoWithFile(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
-        try {
-            ParamData pd = paramDataInit();
-            pd.put("person_name", request.getParameter("person_name"));
-            pd.put("emp_number", request.getParameter("emp_number"));
-            pd.put("person_id", request.getParameter("person_id"));
-            return mPersonService.updatePerson(file, pd);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
+    public ResultData<ParamData> updatePersonInfoWithFile(@RequestParam("file") MultipartFile file, HttpServletRequest request) throws Exception {
+        ParamData pd = paramDataInit();
+        pd.put("person_name", request.getParameter("person_name"));
+        pd.put("emp_number", request.getParameter("emp_number"));
+        pd.put("person_id", request.getParameter("person_id"));
+        return mPersonService.updatePerson(file, pd);
     }
 
     /**
@@ -110,13 +85,8 @@ public class PersonController extends WebBaseController {
      */
     @ResponseBody
     @RequestMapping("/update_info")
-    public ResultData<ParamData> updatePersonInfo(HttpServletRequest request) {
-        try {
-            return mPersonService.updatePerson(paramDataInit());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
+    public ResultData<ParamData> updatePersonInfo(HttpServletRequest request) throws Exception {
+        return mPersonService.updatePerson(paramDataInit());
     }
 
     /**
@@ -127,13 +97,8 @@ public class PersonController extends WebBaseController {
      */
     @ResponseBody
     @RequestMapping("/delete")
-    public ResultData<ParamData> deletePerson(HttpServletRequest request) {
-        try {
-            return mPersonService.deletePerson(paramDataInit());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
+    public ResultData<ParamData> deletePerson(HttpServletRequest request) throws Exception {
+        return mPersonService.deletePerson(paramDataInit());
     }
 
     /**
@@ -145,69 +110,39 @@ public class PersonController extends WebBaseController {
     @ResponseBody
     @RequestMapping("/access_device_list")
     public ResultData<PageData<ParamData>> accessDeviceList(HttpServletRequest request) {
-        try {
-            return mPersonService.getAccessDeviceList(paramDataInit());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
+        return mPersonService.getAccessDeviceList(paramDataInit());
     }
 
 
     @ResponseBody
     @RequestMapping("/image")
-    public ResultData<ParamData> image(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            mPersonService.loadImageFile(paramDataInit(), response);
-            return new ResultData<>(HandleEnum.SUCCESS);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
+    public ResultData<ParamData> image(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        mPersonService.loadImageFile(paramDataInit(), response);
+        return new ResultData<>(ResultEnum.SUCCESS);
     }
 
     @ResponseBody
     @RequestMapping("/batch_upload")
     public ResultData<ParamData> batchUpload(@RequestParam("file[]") MultipartFile[] files, HttpServletRequest request) {
-        try {
-            mPersonService.batchUpload(files, paramDataInit());
-            return new ResultData<>(HandleEnum.SUCCESS);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
+        mPersonService.batchUpload(files, paramDataInit());
+        return new ResultData<>(ResultEnum.SUCCESS);
     }
 
     @ResponseBody
     @RequestMapping("/group_person_list")
     public ResultData<ParamData> groupPersonList(HttpServletRequest request) {
-        try {
-            return mPersonService.getGroupPersonList(paramDataInit());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
+        return mPersonService.getGroupPersonList(paramDataInit());
     }
 
     @ResponseBody
     @RequestMapping("/list_by_group")
     public ResultData<PageData<ParamData>> listByGroup(HttpServletRequest request) {
-        try {
-            return mPersonService.getPersonListByGroup(paramDataInit());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
+        return mPersonService.getPersonListByGroup(paramDataInit());
     }
 
     @ResponseBody
     @RequestMapping("/list_group_unselected")
     public ResultData<List<ParamData>> listNoSelected() {
-        try {
-            return mPersonService.getListGroupUnSelected(paramDataInit());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
+        return mPersonService.getListGroupUnSelected(paramDataInit());
     }
 }

@@ -4,7 +4,7 @@ import com.facerecog.dao.DeviceDao;
 import com.facerecog.dao.PersonDao;
 import com.facerecog.dao.TableDao;
 import com.facerecog.dao.app.ManagerAppDao;
-import com.facerecog.pojo.HandleEnum;
+import com.facerecog.pojo.ResultEnum;
 import com.facerecog.pojo.ParamData;
 import com.facerecog.pojo.ResultData;
 import com.facerecog.pojo.SocketEnum;
@@ -48,11 +48,11 @@ public class ManagerAppServiceImpl implements ManagerAppService {
     public ResultData<ParamData> addPersonWithGrant(ParamData pd) throws Exception {
         String base64Image = pd.getString("file");
         if (StringUtils.isEmpty(base64Image))
-            return new ResultData<>(HandleEnum.FAIL);
+            return new ResultData<>(ResultEnum.FAIL);
         byte[] blobImage = Base64Utils.decodeFromString(base64Image);
         if (blobImage != null) {
             if (blobImage.length / 1024 > 65)
-                return new ResultData<>(HandleEnum.FAIL, "上传失败，图片过大!");
+                return new ResultData<>(ResultEnum.FAIL, "上传失败，图片过大!");
 
             pd.put("blob_image", blobImage);
             boolean a = mPersonDao.insertPerson(pd);
@@ -80,9 +80,9 @@ public class ManagerAppServiceImpl implements ManagerAppService {
                     }
 
                 }
-                return new ResultData<>(HandleEnum.SUCCESS);
+                return new ResultData<>(ResultEnum.SUCCESS);
             }
         }
-        return new ResultData<>(HandleEnum.FAIL);
+        return new ResultData<>(ResultEnum.FAIL);
     }
 }

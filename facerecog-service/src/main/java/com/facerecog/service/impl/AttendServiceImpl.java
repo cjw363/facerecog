@@ -1,7 +1,7 @@
 package com.facerecog.service.impl;
 
 import com.facerecog.dao.AttendDao;
-import com.facerecog.pojo.HandleEnum;
+import com.facerecog.pojo.ResultEnum;
 import com.facerecog.pojo.PageData;
 import com.facerecog.pojo.ParamData;
 import com.facerecog.pojo.ResultData;
@@ -36,7 +36,7 @@ public class AttendServiceImpl implements AttendService {
 
         if (pageSize != 0) PageHelper.startPage(pageNum, pageSize);
         List<ParamData> attendList = mAttendDao.selectAttendList(pd);
-        return new ResultData<>(HandleEnum.SUCCESS, new PageData<>(attendList));
+        return new ResultData<>(ResultEnum.SUCCESS, new PageData<>(attendList));
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.facerecog.security;
 
-import com.facerecog.pojo.HandleEnum;
+import com.facerecog.pojo.ResultEnum;
 import com.facerecog.pojo.ResultData;
 import com.facerecog.utils.JsonUtils;
 
@@ -23,7 +23,7 @@ public class SecAccessDeniedHandler implements AccessDeniedHandler {
         resp.setStatus(HttpServletResponse.SC_OK);
         resp.setCharacterEncoding("UTF-8");
         PrintWriter out = resp.getWriter();
-        ResultData resultData = new ResultData<>(HandleEnum.FAIL, e.getMessage());
+        ResultData resultData = new ResultData<>(ResultEnum.FAIL, e.getMessage());
         String jsonData = JsonUtils.serialize(resultData);
         if(!StringUtils.isEmpty(jsonData))
         out.write(jsonData);

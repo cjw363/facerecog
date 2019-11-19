@@ -1,7 +1,6 @@
 package com.facerecog.controller;
 
 import com.facerecog.controller.base.WebBaseController;
-import com.facerecog.pojo.HandleEnum;
 import com.facerecog.pojo.PageData;
 import com.facerecog.pojo.ParamData;
 import com.facerecog.pojo.ResultData;
@@ -29,20 +28,11 @@ public class AttendController extends WebBaseController {
     @ResponseBody
     @RequestMapping("/attend_list")
     public ResultData<PageData<ParamData>> attendList(HttpServletRequest request) {
-        try {
-            return mAttendService.getAttendList(paramDataInit());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
+        return mAttendService.getAttendList(paramDataInit());
     }
 
     @RequestMapping("/export")
     public void export(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            mAttendService.export(paramDataInit(),response);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        mAttendService.export(paramDataInit(), response);
     }
 }

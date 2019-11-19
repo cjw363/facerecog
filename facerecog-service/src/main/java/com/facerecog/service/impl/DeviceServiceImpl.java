@@ -9,7 +9,7 @@ import com.facerecog.dao.PersonDao;
 import com.facerecog.dao.UserDao;
 import com.facerecog.ehcache.AppCache;
 import com.facerecog.ehcache.WebCache;
-import com.facerecog.pojo.HandleEnum;
+import com.facerecog.pojo.ResultEnum;
 import com.facerecog.pojo.PageData;
 import com.facerecog.pojo.ParamData;
 import com.facerecog.pojo.ResultData;
@@ -72,7 +72,7 @@ public class DeviceServiceImpl implements DeviceService {
         if (pageSize != 0)
             PageHelper.startPage(pageNum, pageSize);
         List<ParamData> deviceList = mDeviceDao.selectDeviceList(pd);
-        return new ResultData<>(HandleEnum.SUCCESS, new PageData<>(deviceList));
+        return new ResultData<>(ResultEnum.SUCCESS, new PageData<>(deviceList));
     }
 
     @Override
@@ -83,7 +83,7 @@ public class DeviceServiceImpl implements DeviceService {
         if (pageSize != 0)
             PageHelper.startPage(pageNum, pageSize);
         List<ParamData> inActDeviceList = mDeviceDao.selectInActDeviceList(pd);
-        return new ResultData<>(HandleEnum.SUCCESS, new PageData<>(inActDeviceList));
+        return new ResultData<>(ResultEnum.SUCCESS, new PageData<>(inActDeviceList));
     }
 
     @Transactional
@@ -92,7 +92,7 @@ public class DeviceServiceImpl implements DeviceService {
         UserInfo userInfo = memory.getCache(pd.getString(CommConst.ACCESS_CPFR_TOKEN));
         ParamData paramData = mDeviceDao.selectInActDevice(pd);
         if (paramData == null)
-            return new ResultData<>(HandleEnum.FAIL, "设备不存在");
+            return new ResultData<>(ResultEnum.FAIL, "设备不存在");
         pd.put("user_id", userInfo.getUserId());
         pd.put("wid", userInfo.getWid());
         if (STATUS_1_DEVICE_ONLINE == (Integer) paramData.get("online")) {
@@ -107,11 +107,11 @@ public class DeviceServiceImpl implements DeviceService {
                 ParamData data = new ParamData();
                 data.put(CommConst.ACCESS_APP_TOKEN, mAppCache.getToken(device_sn));
                 mSocketMessageHandle.sendMessageToDevice(device_sn, mSocketMessageHandle.obtainMessage(SocketEnum.CODE_1001_DEVICE_ACTIVATE, data));
-                return new ResultData<>(HandleEnum.SUCCESS);
+                return new ResultData<>(ResultEnum.SUCCESS);
             }
-            return new ResultData<>(HandleEnum.FAIL);
+            return new ResultData<>(ResultEnum.FAIL);
         } else {
-            return new ResultData<>(HandleEnum.FAIL, "设备不在线");
+            return new ResultData<>(ResultEnum.FAIL, "设备不在线");
         }
     }
 
@@ -150,7 +150,7 @@ public class DeviceServiceImpl implements DeviceService {
         if (pageSize != 0)
             PageHelper.startPage(pageNum, pageSize);
         List<ParamData> personList = mPersonDao.selectGrantPersonListByDeviceSn(pd);
-        return new ResultData<>(HandleEnum.SUCCESS, new PageData<>(personList));
+        return new ResultData<>(ResultEnum.SUCCESS, new PageData<>(personList));
     }
 
     @Transactional
@@ -159,9 +159,9 @@ public class DeviceServiceImpl implements DeviceService {
         if (mDeviceDao.updateDeviceInfo(pd)) {
             TextMessage message = mSocketMessageHandle.obtainMessage(SocketEnum.CODE_1002_DEVICE_UPDATE, null);
             mSocketMessageHandle.sendMessageToDevice(pd.getString(CommConst.DEVICE_SN), message);
-            return new ResultData<>(HandleEnum.SUCCESS);
+            return new ResultData<>(ResultEnum.SUCCESS);
         } else
-            return new ResultData<>(HandleEnum.FAIL);
+            return new ResultData<>(ResultEnum.FAIL);
     }
 
     @Transactional
@@ -174,9 +174,9 @@ public class DeviceServiceImpl implements DeviceService {
             mSocketMessageHandle.sendMessageToDevice(deviceSn, message);
             //移除app缓存
             mAppCache.removeCache(deviceSn);
-            return new ResultData<>(HandleEnum.SUCCESS);
+            return new ResultData<>(ResultEnum.SUCCESS);
         } else
-            return new ResultData<>(HandleEnum.FAIL);
+            return new ResultData<>(ResultEnum.FAIL);
     }
 
     @Override
@@ -189,17 +189,17 @@ public class DeviceServiceImpl implements DeviceService {
         ParamData device = mDeviceDao.selectDevice(pd);
         String appVersionStr = device.getString("app_version");
         if (StringUtils.isEmpty(appVersionStr))
-            return new ResultData<>(HandleEnum.FAIL, "未设置版本号");
+            return new ResultData<>(ResultEnum.FAIL, "未设置版本号");
 
         String projectDlPath = CommUtil.getProjectDlPath();
         if(StringUtils.isEmpty(projectDlPath))
-            return new ResultData<>(HandleEnum.FAIL, "更新路径不存在");
+            return new ResultData<>(ResultEnum.FAIL, "更新路径不存在");
 
         File dir = new File(projectDlPath);
         File[] files = dir.listFiles();//绝对路径
 
         if(files==null||files.length==0)
-            return new ResultData<>(HandleEnum.SUCCESS, "暂无更新");
+            return new ResultData<>(ResultEnum.SUCCESS, "暂无更新");
 
         String[] appVersions = appVersionStr.split(",");
         boolean hasNewVersion = false;
@@ -222,10 +222,10 @@ public class DeviceServiceImpl implements DeviceService {
         if (hasNewVersion) {
             TextMessage message = mSocketMessageHandle.obtainMessage(SocketEnum.CODE_1008_NEW_APP_VERSION, null);
             mSocketMessageHandle.sendMessageToDevice(device.getString("device_sn"), message);
-            return new ResultData<>(HandleEnum.NEW_APP_VERSION_105);
+            return new ResultData<>(ResultEnum.NEW_APP_VERSION_105);
         }
 
-        return new ResultData<>(HandleEnum.SUCCESS, "当前已是最新系统");
+        return new ResultData<>(ResultEnum.SUCCESS, "当前已是最新系统");
     }
 
     @Override
@@ -257,7 +257,7 @@ public class DeviceServiceImpl implements DeviceService {
         }
         ParamData result = new ParamData();
         result.put("list", groupList);
-        return new ResultData<>(HandleEnum.SUCCESS, result);
+        return new ResultData<>(ResultEnum.SUCCESS, result);
     }
 
     @Override
@@ -268,7 +268,7 @@ public class DeviceServiceImpl implements DeviceService {
         if (pageSize != 0)
             PageHelper.startPage(pageNum, pageSize);
         List<ParamData> deviceList = mDeviceDao.selectDeviceListByGroupID(pd);
-        return new ResultData<>(HandleEnum.SUCCESS, new PageData<>(deviceList));
+        return new ResultData<>(ResultEnum.SUCCESS, new PageData<>(deviceList));
     }
 
     @Override
@@ -295,6 +295,6 @@ public class DeviceServiceImpl implements DeviceService {
                     it.remove();
             }
         }
-        return new ResultData<>(HandleEnum.SUCCESS, deviceList);
+        return new ResultData<>(ResultEnum.SUCCESS, deviceList);
     }
 }

@@ -4,7 +4,7 @@ import com.facerecog.dao.DeviceDao;
 import com.facerecog.dao.GroupDao;
 import com.facerecog.dao.PersonDao;
 import com.facerecog.dao.TableDao;
-import com.facerecog.pojo.HandleEnum;
+import com.facerecog.pojo.ResultEnum;
 import com.facerecog.pojo.PageData;
 import com.facerecog.pojo.ParamData;
 import com.facerecog.pojo.ResultData;
@@ -65,7 +65,7 @@ public class PersonServiceImpl implements PersonService {
         if (pageSize != 0)
             PageHelper.startPage(pageNum, pageSize);
         List<ParamData> personList = mPersonDao.selectPersonList(pd);
-        return new ResultData<>(HandleEnum.SUCCESS, new PageData<>(personList));
+        return new ResultData<>(ResultEnum.SUCCESS, new PageData<>(personList));
     }
 
     @Override
@@ -76,21 +76,21 @@ public class PersonServiceImpl implements PersonService {
         if (pageSize != 0)
             PageHelper.startPage(pageNum, pageSize);
         List<ParamData> personList = mPersonDao.selectPersonListWithBlob(pd);
-        return new ResultData<>(HandleEnum.SUCCESS, new PageData<>(personList));
+        return new ResultData<>(ResultEnum.SUCCESS, new PageData<>(personList));
     }
 
     @Transactional
     @Override
     public ResultData<ParamData> addPerson(MultipartFile file, ParamData pd) throws IOException {
         if (file.getSize() / 1024 > 65)
-            return new ResultData<>(HandleEnum.FAIL, "上传失败，图片过大!");
+            return new ResultData<>(ResultEnum.FAIL, "上传失败，图片过大!");
         if (!file.getContentType().contains("image"))
-            return new ResultData<>(HandleEnum.FAIL, "文件类型有误!");
+            return new ResultData<>(ResultEnum.FAIL, "文件类型有误!");
 
         pd.put("blob_image", file.getBytes());
         if (mPersonDao.insertPerson(pd))
-            return new ResultData<>(HandleEnum.SUCCESS);
-        return new ResultData<>(HandleEnum.FAIL);
+            return new ResultData<>(ResultEnum.SUCCESS);
+        return new ResultData<>(ResultEnum.FAIL);
     }
 
 //    private int faceEngine(byte[] bytes) {
@@ -107,9 +107,9 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public ResultData<ParamData> updatePerson(MultipartFile file, ParamData pd) throws IOException {
         if (file.getSize() / 1024 > 65)
-            return new ResultData<>(HandleEnum.FAIL, "上传失败，图片过大!");
+            return new ResultData<>(ResultEnum.FAIL, "上传失败，图片过大!");
         if (!file.getContentType().contains("image"))
-            return new ResultData<>(HandleEnum.FAIL, "文件类型有误!");
+            return new ResultData<>(ResultEnum.FAIL, "文件类型有误!");
 
         //        int num = faceEngine(file.getBytes());
         //        if (num <= 0)
@@ -124,9 +124,9 @@ public class PersonServiceImpl implements PersonService {
             for (String deviceSn : deviceSnLists) {
                 mSocketMessageHandle.sendMessageToDevice(deviceSn, message);
             }
-            return new ResultData<>(HandleEnum.SUCCESS);
+            return new ResultData<>(ResultEnum.SUCCESS);
         } else
-            return new ResultData<>(HandleEnum.FAIL);
+            return new ResultData<>(ResultEnum.FAIL);
     }
 
     @Transactional
@@ -138,9 +138,9 @@ public class PersonServiceImpl implements PersonService {
             for (String deviceSn : deviceSnLists) {
                 mSocketMessageHandle.sendMessageToDevice(deviceSn, message);
             }
-            return new ResultData<>(HandleEnum.SUCCESS);
+            return new ResultData<>(ResultEnum.SUCCESS);
         } else
-            return new ResultData<>(HandleEnum.FAIL);
+            return new ResultData<>(ResultEnum.FAIL);
     }
 
     @Transactional
@@ -154,9 +154,9 @@ public class PersonServiceImpl implements PersonService {
                 mSocketMessageHandle.sendMessageToDevice(deviceSn, personMessage);
                 mSocketMessageHandle.sendMessageToDevice(deviceSn, grantMessage);
             }
-            return new ResultData<>(HandleEnum.SUCCESS);
+            return new ResultData<>(ResultEnum.SUCCESS);
         } else
-            return new ResultData<>(HandleEnum.FAIL);
+            return new ResultData<>(ResultEnum.FAIL);
     }
 
     @Override
@@ -280,7 +280,7 @@ public class PersonServiceImpl implements PersonService {
         if (pageSize != 0)
             PageHelper.startPage(pageNum, pageSize);
         List<ParamData> deviceList = mDeviceDao.selectAccessDeviceListByPersonId(pd);
-        return new ResultData<>(HandleEnum.SUCCESS, new PageData<>(deviceList));
+        return new ResultData<>(ResultEnum.SUCCESS, new PageData<>(deviceList));
     }
 
     @Transactional
@@ -321,10 +321,10 @@ public class PersonServiceImpl implements PersonService {
 
             } catch (Exception e) {
                 e.printStackTrace();
-                return new ResultData<>(HandleEnum.FAIL);
+                return new ResultData<>(ResultEnum.FAIL);
             }
         }
-        return new ResultData<>(HandleEnum.SUCCESS);
+        return new ResultData<>(ResultEnum.SUCCESS);
     }
 
     @Override
@@ -356,7 +356,7 @@ public class PersonServiceImpl implements PersonService {
         }
         ParamData result = new ParamData();
         result.put("list", groupList);
-        return new ResultData<>(HandleEnum.SUCCESS, result);
+        return new ResultData<>(ResultEnum.SUCCESS, result);
     }
 
     @Override
@@ -367,7 +367,7 @@ public class PersonServiceImpl implements PersonService {
         if (pageSize != 0)
             PageHelper.startPage(pageNum, pageSize);
         List<ParamData> personList = mPersonDao.selectPersonListByGroupID(pd);
-        return new ResultData<>(HandleEnum.SUCCESS, new PageData<>(personList));
+        return new ResultData<>(ResultEnum.SUCCESS, new PageData<>(personList));
     }
 
     @Override
@@ -386,6 +386,6 @@ public class PersonServiceImpl implements PersonService {
                     it.remove();
             }
         }
-        return new ResultData<>(HandleEnum.SUCCESS, personList);
+        return new ResultData<>(ResultEnum.SUCCESS, personList);
     }
 }

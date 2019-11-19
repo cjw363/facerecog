@@ -6,7 +6,7 @@ import com.facerecog.dao.TableDao;
 import com.facerecog.dao.UserDao;
 import com.facerecog.utils.TokenProcessor;
 import com.facerecog.ehcache.WebCache;
-import com.facerecog.pojo.HandleEnum;
+import com.facerecog.pojo.ResultEnum;
 import com.facerecog.pojo.ParamData;
 import com.facerecog.pojo.ResultData;
 import com.facerecog.service.interf.UserService;
@@ -63,11 +63,11 @@ public class UserServiceImpl implements UserService {
 
                 mUserDao.updateUserLoginTime(paramData);
 
-                return new ResultData<>(HandleEnum.SUCCESS, paramData);
+                return new ResultData<>(ResultEnum.SUCCESS, paramData);
             } else {
-                return new ResultData<>(HandleEnum.PASSWORD_ERROR_104);
+                return new ResultData<>(ResultEnum.PASSWORD_ERROR_104);
             }
-        } else return new ResultData<>(HandleEnum.ADMIN_NOT_EXIST_103);
+        } else return new ResultData<>(ResultEnum.ADMIN_NOT_EXIST_103);
     }
 
     @Transactional
@@ -80,9 +80,9 @@ public class UserServiceImpl implements UserService {
                 //注册成功，建立对应仓库
                 int wid = mTableDao.selectLastInsertID();
                 mTableDao.createTableWarehouse(wid);
-                return new ResultData<>(HandleEnum.SUCCESS);
-            } else return new ResultData<>(HandleEnum.FAIL);
-        } else return new ResultData<>(HandleEnum.ADMIN_EXISTED_100);
+                return new ResultData<>(ResultEnum.SUCCESS);
+            } else return new ResultData<>(ResultEnum.FAIL);
+        } else return new ResultData<>(ResultEnum.ADMIN_EXISTED_100);
     }
 
     @Override
@@ -107,8 +107,8 @@ public class UserServiceImpl implements UserService {
         pd.put("user_id", memory.getCache(pd.getString(CommConst.ACCESS_CPFR_TOKEN)).getUserId());
         UserInfo userInfo = mUserDao.selectUserMapByName(pd);
         if (userInfo.getPassword().equals(pd.getString("old_password"))) {
-            if (mUserDao.updateUserPassword(pd)) return new ResultData<>(HandleEnum.SUCCESS);
-            else return new ResultData<>(HandleEnum.FAIL);
-        } else return new ResultData<>(HandleEnum.FAIL, "原密码输入有误");
+            if (mUserDao.updateUserPassword(pd)) return new ResultData<>(ResultEnum.SUCCESS);
+            else return new ResultData<>(ResultEnum.FAIL);
+        } else return new ResultData<>(ResultEnum.FAIL, "原密码输入有误");
     }
 }

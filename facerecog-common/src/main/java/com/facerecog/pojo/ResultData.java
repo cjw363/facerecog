@@ -45,23 +45,28 @@ public class ResultData<T> {
         this.data = data;
     }
 
-    public ResultData(HandleEnum operateEnum) {
+    public ResultData(ResultCode resultCode){
+        this.code = resultCode.getCode();
+        this.message = resultCode.getMessage();
+    }
+
+    public ResultData(ResultEnum operateEnum) {
         this.code = operateEnum.getCode();
         this.message = operateEnum.getMessage();
     }
 
-    public ResultData(HandleEnum operateEnum, T data) {
+    public ResultData(ResultEnum operateEnum, T data) {
         this.code = operateEnum.getCode();
         this.message = operateEnum.getMessage();
         this.data = data;
     }
 
-    public ResultData(HandleEnum operateEnum, String message) {
+    public ResultData(ResultEnum operateEnum, String message) {
         this.code = operateEnum.getCode();
         this.message = message;
     }
 
-    public ResultData(HandleEnum operateEnum, String message, T data) {
+    public ResultData(ResultEnum operateEnum, String message, T data) {
         this.code = operateEnum.getCode();
         this.message = message;
         this.data = data;

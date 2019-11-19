@@ -1,7 +1,7 @@
 package com.facerecog.controller;
 
 import com.facerecog.controller.base.WebBaseController;
-import com.facerecog.pojo.HandleEnum;
+import com.facerecog.pojo.ResultEnum;
 import com.facerecog.pojo.PageData;
 import com.facerecog.pojo.ParamData;
 import com.facerecog.pojo.ResultData;
@@ -30,111 +30,61 @@ public class GroupController extends WebBaseController {
     @ResponseBody
     @RequestMapping("/list")
     public ResultData<PageData<ParamData>> list() {
-        try {
-            return mGroupService.getGroupList(paramDataInit());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
+        return mGroupService.getGroupList(paramDataInit());
     }
 
     @ResponseBody
     @RequestMapping("/detail")
     public ResultData<ParamData> detail() {
-        try {
-            ParamData data = mGroupService.queryGroup(paramDataInit());
-            return new ResultData<>(HandleEnum.SUCCESS, data);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
+        ParamData data = mGroupService.queryGroup(paramDataInit());
+        return new ResultData<>(ResultEnum.SUCCESS, data);
     }
 
     @ResponseBody
     @RequestMapping("/add")
     public ResultData<ParamData> add() {
-        try {
-            return mGroupService.addGroup(paramDataInit());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
+        return mGroupService.addGroup(paramDataInit());
     }
 
     @ResponseBody
     @RequestMapping("/add_person")
     public ResultData<ParamData> addPerson() {
-        try {
-            return mGroupService.addGroupPerson(paramDataInit());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
+        return mGroupService.addGroupPerson(paramDataInit());
     }
 
     @ResponseBody
     @RequestMapping("/add_device")
     public ResultData<ParamData> addDevice() {
-        try {
-            return mGroupService.addGroupDevice(paramDataInit());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
+        return mGroupService.addGroupDevice(paramDataInit());
     }
 
     @ResponseBody
     @RequestMapping("/update_info")
     public ResultData<ParamData> updateInfo() {
-        try {
-            return mGroupService.updateGroupInfo(paramDataInit());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
+        return mGroupService.updateGroupInfo(paramDataInit());
     }
 
     @ResponseBody
     @RequestMapping("/delete")
     public ResultData<ParamData> delete() {
-        try {
-            return mGroupService.deleteGroup(paramDataInit());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
+        return mGroupService.deleteGroup(paramDataInit());
     }
 
     @ResponseBody
     @RequestMapping("/delete_person")
     public ResultData<ParamData> deletePerson() {
-        try {
-            return mGroupService.deleteGroupPerson(paramDataInit());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
+        return mGroupService.deleteGroupPerson(paramDataInit());
     }
 
     @ResponseBody
     @RequestMapping("/delete_device")
     public ResultData<ParamData> deleteDevice() {
-        try {
-            return mGroupService.deleteGroupDevice(paramDataInit());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
+        return mGroupService.deleteGroupDevice(paramDataInit());
     }
 
     @ResponseBody
     @RequestMapping("/list_device_person_by_group")
     public ResultData<ParamData> listDevicePersonByGroup() {
-        try {
-            return mGroupService.getListDevicePersonByGroup(paramDataInit());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
+        return mGroupService.getListDevicePersonByGroup(paramDataInit());
     }
 }

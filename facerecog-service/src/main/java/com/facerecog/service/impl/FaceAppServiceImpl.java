@@ -9,7 +9,7 @@ import com.facerecog.dao.PersonDao;
 import com.facerecog.dao.TableDao;
 import com.facerecog.dao.app.FaceAppDao;
 import com.facerecog.ehcache.AppCache;
-import com.facerecog.pojo.HandleEnum;
+import com.facerecog.pojo.ResultEnum;
 import com.facerecog.pojo.ParamData;
 import com.facerecog.pojo.ResultData;
 import com.facerecog.pojo.SocketEnum;
@@ -70,21 +70,21 @@ public class FaceAppServiceImpl implements FaceAppService {
     public ResultData<ParamData> register(ParamData pd) {
         String deviceSn = pd.getString(CommConst.DEVICE_SN);
         if (StringUtils.isEmpty(deviceSn))
-            return new ResultData<>(HandleEnum.FAIL, "设备序列号不能为空");
+            return new ResultData<>(ResultEnum.FAIL, "设备序列号不能为空");
         ParamData paramData = mDeviceDao.selectInActDevice(pd);
         if (paramData == null) {
             if (mFaceAppDao.insertInActDevice(pd)) {
-                return new ResultData<>(HandleEnum.SUCCESS, "已注册新设备");
+                return new ResultData<>(ResultEnum.SUCCESS, "已注册新设备");
             }
         } else
-            return new ResultData<>(HandleEnum.SUCCESS, "设备已注册");
-        return new ResultData<>(HandleEnum.FAIL, "设备注册失败，请重新连接");
+            return new ResultData<>(ResultEnum.SUCCESS, "设备已注册");
+        return new ResultData<>(ResultEnum.FAIL, "设备注册失败，请重新连接");
     }
 
     @Override
     public ResultData<ParamData> getDeviceInfo(ParamData pd) {
         ParamData paramData = mFaceAppDao.selectDevice(pd);
-        return new ResultData<>(HandleEnum.SUCCESS, paramData);
+        return new ResultData<>(ResultEnum.SUCCESS, paramData);
     }
 
     @Override
@@ -93,13 +93,13 @@ public class FaceAppServiceImpl implements FaceAppService {
         System.out.println(new Date().toString());
         System.out.println("客户端 " + pd.getString(CommConst.DEVICE_SN) + "开始下载人员");
         List<ParamData> list = mFaceAppDao.selectPersonListWithBlob(pd);
-        return new ResultData<>(HandleEnum.SUCCESS, list);
+        return new ResultData<>(ResultEnum.SUCCESS, list);
     }
 
     @Override
     public ResultData<List<ParamData>> getGrantList(ParamData pd) {
         List<ParamData> list = mFaceAppDao.selectGrantList(pd);
-        return new ResultData<>(HandleEnum.SUCCESS, list);
+        return new ResultData<>(ResultEnum.SUCCESS, list);
     }
 
     @Transactional
@@ -107,9 +107,9 @@ public class FaceAppServiceImpl implements FaceAppService {
     @Deprecated
     public ResultData<ParamData> addRecord(MultipartFile file, HttpServletRequest request) throws Exception{
         if (file.getSize() / 1024 > 65)
-            return new ResultData<>(HandleEnum.FAIL, "上传失败，图片过大!");
+            return new ResultData<>(ResultEnum.FAIL, "上传失败，图片过大!");
         if (!file.getContentType().contains("image"))
-            return new ResultData<>(HandleEnum.FAIL, "文件类型有误!");
+            return new ResultData<>(ResultEnum.FAIL, "文件类型有误!");
         ParamData pd = new ParamData();
         AppDevice cache = memory.getCache(getTokenFromRequest(request));
         pd.put(CommConst.DEVICE_SN, cache.getDeviceSn());
@@ -118,10 +118,10 @@ public class FaceAppServiceImpl implements FaceAppService {
         pd.put("record_image", file.getBytes());
         pd.put("wid", cache.getWid());
         if (mFaceAppDao.insertRecord(pd)) {
-            return new ResultData<>(HandleEnum.SUCCESS);
+            return new ResultData<>(ResultEnum.SUCCESS);
         }
 
-        return new ResultData<>(HandleEnum.FAIL);
+        return new ResultData<>(ResultEnum.FAIL);
     }
 
     @Transactional
@@ -129,17 +129,17 @@ public class FaceAppServiceImpl implements FaceAppService {
     public ResultData<ParamData> addRecord(ParamData pd) throws Exception {
         String base64Image = pd.getString("file");
         if (StringUtils.isEmpty(base64Image))
-            return new ResultData<>(HandleEnum.FAIL);
+            return new ResultData<>(ResultEnum.FAIL);
         byte[] blobImage = Base64Utils.decodeFromString(base64Image);
         if (blobImage != null) {
             if (blobImage.length / 1024 > 65)
-                return new ResultData<>(HandleEnum.FAIL, "上传失败，图片过大!");
+                return new ResultData<>(ResultEnum.FAIL, "上传失败，图片过大!");
             pd.put("record_image", blobImage);
             if (mFaceAppDao.insertRecord(pd) && mFaceAppDao.updateGrantPassNumber(pd))
-                return new ResultData<>(HandleEnum.SUCCESS);
+                return new ResultData<>(ResultEnum.SUCCESS);
 
         }
-        return new ResultData<>(HandleEnum.FAIL);
+        return new ResultData<>(ResultEnum.FAIL);
     }
 
     @Transactional
@@ -175,7 +175,7 @@ public class FaceAppServiceImpl implements FaceAppService {
     public ResultData<ParamData> getCurrentDate() {
         ParamData pd = new ParamData();
         pd.put("current_date", mFaceAppDao.selectNow());
-        return new ResultData<>(HandleEnum.SUCCESS, pd);
+        return new ResultData<>(ResultEnum.SUCCESS, pd);
     }
 
     @Transactional
@@ -183,9 +183,9 @@ public class FaceAppServiceImpl implements FaceAppService {
     @Deprecated
     public ResultData<ParamData> addPersonWithGrant(MultipartFile file, HttpServletRequest request) throws Exception {
         if (file.getSize() / 1024 > 65)
-            return new ResultData<>(HandleEnum.FAIL, "上传失败，图片过大!");
+            return new ResultData<>(ResultEnum.FAIL, "上传失败，图片过大!");
         if (!file.getContentType().contains("image"))
-            return new ResultData<>(HandleEnum.FAIL, "文件类型有误!");
+            return new ResultData<>(ResultEnum.FAIL, "文件类型有误!");
 
         ParamData pd = new ParamData();
         AppDevice cache = memory.getCache(getTokenFromRequest(request));
@@ -211,10 +211,10 @@ public class FaceAppServiceImpl implements FaceAppService {
         if (a && b) {
             mSocketMessageHandle.sendMessageToDevice(cache.getDeviceSn(), mSocketMessageHandle.obtainMessage(SocketEnum.CODE_1004_GRANT_UPDATE, null));
             ParamData person = mPersonDao.selectPerson(pd);
-            return new ResultData<>(HandleEnum.SUCCESS, person);
+            return new ResultData<>(ResultEnum.SUCCESS, person);
         }
 
-        return new ResultData<>(HandleEnum.FAIL);
+        return new ResultData<>(ResultEnum.FAIL);
     }
 
     @Transactional
@@ -222,11 +222,11 @@ public class FaceAppServiceImpl implements FaceAppService {
     public ResultData<ParamData> addPersonWithGrant(ParamData pd) throws Exception {
         String base64Image = pd.getString("file");
         if (StringUtils.isEmpty(base64Image))
-            return new ResultData<>(HandleEnum.FAIL);
+            return new ResultData<>(ResultEnum.FAIL);
         byte[] blobImage = Base64Utils.decodeFromString(base64Image);
         if (blobImage != null) {
             if (blobImage.length / 1024 > 65)
-                return new ResultData<>(HandleEnum.FAIL, "上传失败，图片过大!");
+                return new ResultData<>(ResultEnum.FAIL, "上传失败，图片过大!");
 
             pd.put("blob_image", blobImage);
             boolean a = mPersonDao.insertPerson(pd);
@@ -247,10 +247,10 @@ public class FaceAppServiceImpl implements FaceAppService {
                 mSocketMessageHandle.sendMessageToDevice(pd.getString(CommConst.DEVICE_SN), mSocketMessageHandle.obtainMessage(SocketEnum.CODE_1004_GRANT_UPDATE, null));
 
                 ParamData person = mFaceAppDao.selectPerson(pd);
-                return new ResultData<>(HandleEnum.SUCCESS, person);
+                return new ResultData<>(ResultEnum.SUCCESS, person);
             }
         }
-        return new ResultData<>(HandleEnum.FAIL);
+        return new ResultData<>(ResultEnum.FAIL);
     }
 
     @Transactional
@@ -274,7 +274,7 @@ public class FaceAppServiceImpl implements FaceAppService {
         pd.put("list", list);
         if (list.size() > 0)
             mFaceAppDao.updateGrantSyncStatus(pd);
-        return new ResultData<>(HandleEnum.SUCCESS, mFaceAppDao.selectPersonListNoSync(pd));
+        return new ResultData<>(ResultEnum.SUCCESS, mFaceAppDao.selectPersonListNoSync(pd));
     }
 
     @Override
@@ -322,12 +322,12 @@ public class FaceAppServiceImpl implements FaceAppService {
     public ResultData<ParamData> getLastVersionInfo(ParamData pd) {
         String projectDlPath = CommUtil.getProjectDlPath();
         if(StringUtils.isEmpty(projectDlPath))
-            return new ResultData<>(HandleEnum.FAIL, "更新路径不存在");
+            return new ResultData<>(ResultEnum.FAIL, "更新路径不存在");
         File dir = new File(projectDlPath);
 
         File[] files = dir.listFiles();//绝对路径
         if(files==null||files.length==0)
-            return new ResultData<>(HandleEnum.SUCCESS, "暂无更新");
+            return new ResultData<>(ResultEnum.SUCCESS, "暂无更新");
 
         ParamData data = new ParamData();
         data.put("version", "-1");
@@ -340,7 +340,7 @@ public class FaceAppServiceImpl implements FaceAppService {
         }
 
         data.put("description", "暂无");
-        return new ResultData<>(HandleEnum.SUCCESS, data);
+        return new ResultData<>(ResultEnum.SUCCESS, data);
     }
 
     @Override
@@ -361,14 +361,14 @@ public class FaceAppServiceImpl implements FaceAppService {
 
     @Override
     public ResultData<List<ParamData>> getPersonList(ParamData pd) {
-        return new ResultData<>(HandleEnum.SUCCESS, mFaceAppDao.selectPersonList(pd));
+        return new ResultData<>(ResultEnum.SUCCESS, mFaceAppDao.selectPersonList(pd));
     }
 
     @Override
     public ResultData<ParamData> uploadDeviceInfo(ParamData pd) {
         if (mFaceAppDao.updateDeviceConfig(pd))
-            return new ResultData<>(HandleEnum.SUCCESS);
-        return new ResultData<>(HandleEnum.FAIL);
+            return new ResultData<>(ResultEnum.SUCCESS);
+        return new ResultData<>(ResultEnum.FAIL);
     }
 
     private String getTokenFromRequest(HttpServletRequest request) {

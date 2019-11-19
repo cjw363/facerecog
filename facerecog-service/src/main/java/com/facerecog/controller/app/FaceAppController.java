@@ -1,7 +1,7 @@
 package com.facerecog.controller.app;
 
 import com.facerecog.controller.base.AppBaseController;
-import com.facerecog.pojo.HandleEnum;
+import com.facerecog.pojo.ResultEnum;
 import com.facerecog.pojo.ParamData;
 import com.facerecog.pojo.ResultData;
 import com.facerecog.service.interf.FaceAppService;
@@ -37,7 +37,7 @@ public class FaceAppController extends AppBaseController {
             return mFaceAppService.register(paramDataInit());
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
+            return new ResultData<>(ResultEnum.FAIL, e.getMessage());
         }
     }
 
@@ -48,7 +48,7 @@ public class FaceAppController extends AppBaseController {
             return mFaceAppService.getDeviceInfo(paramDataInit());
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
+            return new ResultData<>(ResultEnum.FAIL, e.getMessage());
         }
     }
 
@@ -59,7 +59,7 @@ public class FaceAppController extends AppBaseController {
             return mFaceAppService.getPersonBase64List(paramDataInit());
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
+            return new ResultData<>(ResultEnum.FAIL, e.getMessage());
         }
     }
 
@@ -70,7 +70,7 @@ public class FaceAppController extends AppBaseController {
             return mFaceAppService.getGrantList(paramDataInit());
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
+            return new ResultData<>(ResultEnum.FAIL, e.getMessage());
         }
     }
 
@@ -81,7 +81,7 @@ public class FaceAppController extends AppBaseController {
             return mFaceAppService.addRecord(paramDataInit());
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
+            return new ResultData<>(ResultEnum.FAIL, e.getMessage());
         }
     }
 
@@ -92,14 +92,14 @@ public class FaceAppController extends AppBaseController {
             return mFaceAppService.getCurrentDate();
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
+            return new ResultData<>(ResultEnum.FAIL, e.getMessage());
         }
     }
 
     @ResponseBody
     @RequestMapping("/disconnect")
     public ResultData<ParamData> disconnect(HttpServletRequest request) {
-        return new ResultData<>(HandleEnum.FAIL, "未与服务器建立连接!");
+        return new ResultData<>(ResultEnum.FAIL, "未与服务器建立连接!");
     }
 
     @ResponseBody
@@ -109,7 +109,7 @@ public class FaceAppController extends AppBaseController {
             return mFaceAppService.addPersonWithGrant(paramDataInit());
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
+            return new ResultData<>(ResultEnum.FAIL, e.getMessage());
         }
     }
 
@@ -120,7 +120,7 @@ public class FaceAppController extends AppBaseController {
             return mFaceAppService.syncPerson(paramDataInit());
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
+            return new ResultData<>(ResultEnum.FAIL, e.getMessage());
         }
     }
 
@@ -131,7 +131,7 @@ public class FaceAppController extends AppBaseController {
             return mFaceAppService.getLastVersionInfo(paramDataInit());
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
+            return new ResultData<>(ResultEnum.FAIL, e.getMessage());
         }
     }
 
@@ -140,10 +140,10 @@ public class FaceAppController extends AppBaseController {
     public ResultData<ParamData> downloadApk(HttpServletRequest request, HttpServletResponse response) {
         try {
             mFaceAppService.downloadApk(paramDataInit(), request, response);
-            return new ResultData<>(HandleEnum.SUCCESS);
+            return new ResultData<>(ResultEnum.SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
+            return new ResultData<>(ResultEnum.FAIL, e.getMessage());
         }
     }
 
@@ -154,7 +154,7 @@ public class FaceAppController extends AppBaseController {
             return mFaceAppService.getPersonList(paramDataInit());
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
+            return new ResultData<>(ResultEnum.FAIL, e.getMessage());
         }
     }
 
@@ -163,10 +163,10 @@ public class FaceAppController extends AppBaseController {
     public ResultData<ParamData> downloadImage(HttpServletRequest request, HttpServletResponse response) {
         try {
             mFaceAppService.downloadImage(paramDataInit(), response);
-            return new ResultData<>(HandleEnum.SUCCESS);
+            return new ResultData<>(ResultEnum.SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
+            return new ResultData<>(ResultEnum.FAIL, e.getMessage());
         }
     }
 
@@ -177,7 +177,7 @@ public class FaceAppController extends AppBaseController {
             return mFaceAppService.uploadDeviceInfo(paramDataInit());
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
+            return new ResultData<>(ResultEnum.FAIL, e.getMessage());
         }
     }
 }

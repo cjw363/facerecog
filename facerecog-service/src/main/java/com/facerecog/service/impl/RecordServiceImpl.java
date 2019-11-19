@@ -2,7 +2,7 @@ package com.facerecog.service.impl;
 
 import com.facerecog.dao.RecordDao;
 import com.facerecog.ehcache.WebCache;
-import com.facerecog.pojo.HandleEnum;
+import com.facerecog.pojo.ResultEnum;
 import com.facerecog.pojo.PageData;
 import com.facerecog.pojo.ParamData;
 import com.facerecog.pojo.ResultData;
@@ -40,15 +40,15 @@ public class RecordServiceImpl implements RecordService {
 
         if (pageSize != 0) PageHelper.startPage(pageNum, pageSize);
         List<ParamData> recordList = mRecordDao.selectRecordListWithBlob(pd);
-        return new ResultData<>(HandleEnum.SUCCESS, new PageData<>(recordList));
+        return new ResultData<>(ResultEnum.SUCCESS, new PageData<>(recordList));
     }
 
     @Transactional
     @Override
     public ResultData<ParamData> deleteRecord(ParamData pd) {
         if (mRecordDao.deleteRecord(pd)) {
-            return new ResultData<>(HandleEnum.SUCCESS);
-        } else return new ResultData<>(HandleEnum.FAIL);
+            return new ResultData<>(ResultEnum.SUCCESS);
+        } else return new ResultData<>(ResultEnum.FAIL);
     }
 
     @Transactional
@@ -68,17 +68,17 @@ public class RecordServiceImpl implements RecordService {
         paramData.put("wid", memory.getCache(pd.getString(CommConst.ACCESS_CPFR_TOKEN)).getWid());
         paramData.put("list", list);
         if (mRecordDao.deleteRecordLists(paramData)) {
-            return new ResultData<>(HandleEnum.SUCCESS);
+            return new ResultData<>(ResultEnum.SUCCESS);
         }
-        return new ResultData<>(HandleEnum.FAIL);
+        return new ResultData<>(ResultEnum.FAIL);
 
     }
 
     @Transactional
     @Override
     public ResultData<ParamData> clearRecord(ParamData pd) {
-        if (mRecordDao.deleteRecodeAll(pd)) return new ResultData<>(HandleEnum.SUCCESS,"删除成功");
-        else return new ResultData<>(HandleEnum.FAIL,"删除失败");
+        if (mRecordDao.deleteRecodeAll(pd)) return new ResultData<>(ResultEnum.SUCCESS,"删除成功");
+        else return new ResultData<>(ResultEnum.FAIL,"删除失败");
     }
 
 }

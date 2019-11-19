@@ -5,7 +5,7 @@ import com.facerecog.dao.DeviceDao;
 import com.facerecog.dao.GrantDao;
 import com.facerecog.dao.PersonDao;
 import com.facerecog.ehcache.WebCache;
-import com.facerecog.pojo.HandleEnum;
+import com.facerecog.pojo.ResultEnum;
 import com.facerecog.pojo.ParamData;
 import com.facerecog.pojo.ResultData;
 import com.facerecog.pojo.SocketEnum;
@@ -81,9 +81,9 @@ public class GrantServiceImpl implements GrantService {
                 mSocketMessageHandle.sendMessageToDevice(p.getString(CommConst.DEVICE_SN), personMessage);
                 mSocketMessageHandle.sendMessageToDevice(p.getString(CommConst.DEVICE_SN), grantMessage);
             }
-            return new ResultData<>(HandleEnum.SUCCESS);
+            return new ResultData<>(ResultEnum.SUCCESS);
         }
-        return new ResultData<>(HandleEnum.FAIL);
+        return new ResultData<>(ResultEnum.FAIL);
     }
 
     @Transactional
@@ -116,9 +116,9 @@ public class GrantServiceImpl implements GrantService {
             for (ParamData p : deviceSnList) {
                 mSocketMessageHandle.sendMessageToDevice(p.getString(CommConst.DEVICE_SN), message);
             }
-            return new ResultData<>(HandleEnum.SUCCESS);
+            return new ResultData<>(ResultEnum.SUCCESS);
         }
-        return new ResultData<>(HandleEnum.FAIL);
+        return new ResultData<>(ResultEnum.FAIL);
     }
 
     @Override
@@ -128,6 +128,6 @@ public class GrantServiceImpl implements GrantService {
         ParamData data = new ParamData<>();
         data.put("device_list", deviceList);
         data.put("person_list", personList);
-        return new ResultData<>(HandleEnum.SUCCESS, data);
+        return new ResultData<>(ResultEnum.SUCCESS, data);
     }
 }

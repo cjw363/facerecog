@@ -1,7 +1,7 @@
 package com.facerecog.controller;
 
 import com.facerecog.controller.base.WebBaseController;
-import com.facerecog.pojo.HandleEnum;
+import com.facerecog.pojo.ResultEnum;
 import com.facerecog.pojo.ParamData;
 import com.facerecog.pojo.ResultData;
 import com.facerecog.service.interf.UserService;
@@ -22,65 +22,45 @@ import javax.servlet.http.HttpServletResponse;
  * @Created by cjw
  */
 @Controller
-@RequestMapping(value = "/user",method = {RequestMethod.POST, RequestMethod.GET})
+@RequestMapping(value = "/user", method = {RequestMethod.POST, RequestMethod.GET})
 @SuppressWarnings({"rawtypes", "unchecked"})
 public class UserController extends WebBaseController {
     @Autowired
     private UserService mUserService;
 
-//    @ResponseBody
-//    @RequestMapping("/login")
-//    public ResultData<ParamData> login(HttpServletRequest request, HttpServletResponse response) {
-//        try {
-//            return mUserService.login(paramDataInit(), request, response);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-//        }
-//    }
+    //    @ResponseBody
+    //    @RequestMapping("/login")
+    //    public ResultData<ParamData> login(HttpServletRequest request, HttpServletResponse response) {
+    //        try {
+    //            return mUserService.login(paramDataInit(), request, response);
+    //        } catch (Exception e) {
+    //            e.printStackTrace();
+    //            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
+    //        }
+    //    }
 
     @ResponseBody
     @RequestMapping("/register")
     public ResultData<ParamData> register(HttpServletRequest request) {
-        try {
-            return mUserService.register(paramDataInit());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
+        return mUserService.register(paramDataInit());
     }
 
     @ResponseBody
     @RequestMapping("/logout")
     public ResultData<ParamData> logout(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            mUserService.logout(request, response, paramDataInit());
-            return new ResultData<>(HandleEnum.SUCCESS);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
+        mUserService.logout(request, response, paramDataInit());
+        return new ResultData<>(ResultEnum.SUCCESS);
     }
 
     @ResponseBody
     @RequestMapping("/nologin")
     public ResultData<ParamData> noLogin(HttpServletRequest request) {
-        try {
-            return new ResultData<>(HandleEnum.SESSION_ERROR_102);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
+        return new ResultData<>(ResultEnum.SESSION_ERROR_102);
     }
 
     @ResponseBody
     @RequestMapping("/change_password")
     public ResultData<ParamData> changePassword(HttpServletRequest request) {
-        try {
-            return mUserService.changePassword(paramDataInit());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
+        return mUserService.changePassword(paramDataInit());
     }
 }

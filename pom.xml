@@ -32,6 +32,9 @@
 		<fileupload.version>1.3.1</fileupload.version>
 		<ehcache.version>2.10.2</ehcache.version>
 		<fastDFS.client.version>1.26.6</fastDFS.client.version>
+		<lombok.version>1.16.16</lombok.version>
+		<springfox-swagger.version>2.7.0</springfox-swagger.version>
+		<guava.version>24.0-jre</guava.version>
 	</properties>
 
 	<dependencyManagement>
@@ -71,6 +74,32 @@
 				<groupId>com.github.tobato</groupId>
 				<artifactId>fastdfs-client</artifactId>
 				<version>${fastDFS.client.version}</version>
+			</dependency>
+
+			<!-- @Data 生成set get -->
+			<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok</artifactId>
+				<version>${lombok.version}</version>
+			</dependency>
+
+			<!-- ImmutableMap -->
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>${guava.version}</version>
+			</dependency>
+
+			<!-- swagger2 -->
+			<dependency>
+				<groupId>io.springfox</groupId>
+				<artifactId>springfox-swagger2</artifactId>
+				<version>${springfox-swagger.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>io.springfox</groupId>
+				<artifactId>springfox-swagger-ui</artifactId>
+				<version>${springfox-swagger.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

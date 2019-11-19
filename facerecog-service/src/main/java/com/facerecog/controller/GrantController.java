@@ -1,7 +1,6 @@
 package com.facerecog.controller;
 
 import com.facerecog.controller.base.WebBaseController;
-import com.facerecog.pojo.HandleEnum;
 import com.facerecog.pojo.ParamData;
 import com.facerecog.pojo.ResultData;
 import com.facerecog.service.interf.GrantService;
@@ -21,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
  * @Created by cjw
  */
 @Controller
-@RequestMapping(value = "/grant",method = {RequestMethod.POST, RequestMethod.GET})
+@RequestMapping(value = "/grant", method = {RequestMethod.POST, RequestMethod.GET})
 @SuppressWarnings({"rawtypes", "unchecked"})
 public class GrantController extends WebBaseController {
 
@@ -30,34 +29,19 @@ public class GrantController extends WebBaseController {
 
     @ResponseBody
     @RequestMapping("/add")
-    public ResultData<ParamData> add(HttpServletRequest request) {
-        try {
-            return mGrantService.addGrant(paramDataInit());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
+    public ResultData<ParamData> add(HttpServletRequest request) throws Exception {
+        return mGrantService.addGrant(paramDataInit());
     }
 
     @ResponseBody
     @RequestMapping("/ban")
-    public ResultData<ParamData> ban(HttpServletRequest request) {
-        try {
-            return mGrantService.banGrant(paramDataInit());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
+    public ResultData<ParamData> ban(HttpServletRequest request) throws Exception {
+        return mGrantService.banGrant(paramDataInit());
     }
 
     @ResponseBody
     @RequestMapping("/list_device_person")
     public ResultData<ParamData> listDevicePerson(HttpServletRequest request) {
-        try {
-            return mGrantService.getListDevicePerson(paramDataInit());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
+        return mGrantService.getListDevicePerson(paramDataInit());
     }
 }

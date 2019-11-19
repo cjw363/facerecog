@@ -1,7 +1,7 @@
 package com.facerecog.config;
 
 import com.facerecog.annot.NoRepeatSubmit;
-import com.facerecog.pojo.HandleEnum;
+import com.facerecog.pojo.ResultEnum;
 import com.facerecog.pojo.ResultData;
 
 import net.minidev.json.JSONObject;
@@ -47,12 +47,12 @@ public class NoRepeatSubmitAop {
                 return o;
             } else {
                 logger.warn("重复提交");
-                return new ResultData<>(HandleEnum.FAIL, "重复提交");
+                return new ResultData<>(ResultEnum.FAIL, "重复提交");
             }
         } catch (Throwable e) {
             e.printStackTrace();
             logger.error("验证重复提交时出现未知异常!");
-            return new ResultData<>(HandleEnum.FAIL, "验证重复提交时出现未知异常!");
+            return new ResultData<>(ResultEnum.FAIL, "验证重复提交时出现未知异常!");
         }
     }
 }

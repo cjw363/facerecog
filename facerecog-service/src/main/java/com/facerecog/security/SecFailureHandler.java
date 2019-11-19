@@ -1,6 +1,6 @@
 package com.facerecog.security;
 
-import com.facerecog.pojo.HandleEnum;
+import com.facerecog.pojo.ResultEnum;
 import com.facerecog.pojo.ResultData;
 import com.facerecog.utils.JsonUtils;
 
@@ -40,7 +40,7 @@ public class SecFailureHandler implements AuthenticationFailureHandler {
         } else {
             sb.append("登录失败!");
         }
-        ResultData resultData = new ResultData<>(HandleEnum.FAIL, sb.toString());
+        ResultData resultData = new ResultData<>(ResultEnum.FAIL, sb.toString());
         String jsonData = JsonUtils.serialize(resultData);
         if(!StringUtils.isEmpty(jsonData))
             out.write(jsonData);

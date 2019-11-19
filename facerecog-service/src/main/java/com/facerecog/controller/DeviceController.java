@@ -2,7 +2,7 @@ package com.facerecog.controller;
 
 import com.facerecog.api.DeviceApi;
 import com.facerecog.controller.base.WebBaseController;
-import com.facerecog.pojo.HandleEnum;
+import com.facerecog.pojo.ResultEnum;
 import com.facerecog.pojo.PageData;
 import com.facerecog.pojo.ParamData;
 import com.facerecog.pojo.ResultData;
@@ -34,151 +34,86 @@ public class DeviceController extends WebBaseController implements DeviceApi {
     @ResponseBody
     @RequestMapping("/list")
     public ResultData<PageData<ParamData>> list() {
-        try {
-            return mDeviceService.getDeviceList(paramDataInit());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
+        return mDeviceService.getDeviceList(paramDataInit());
     }
 
     @ResponseBody
     @RequestMapping("/inact_list")
     public ResultData<PageData<ParamData>> inactList() {
-        try {
-            return mDeviceService.getInActDeviceList(paramDataInit());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
+        return mDeviceService.getInActDeviceList(paramDataInit());
     }
 
     @ResponseBody
     @RequestMapping("/all_list")
     public ResultData<List<PageData<ParamData>>> allList() {
-        try {
-            ResultData<PageData<ParamData>> device = mDeviceService.getDeviceList(paramDataInit());
-            ResultData<PageData<ParamData>> inActDevice = mDeviceService.getInActDeviceList(paramDataInit());
+        ResultData<PageData<ParamData>> device = mDeviceService.getDeviceList(paramDataInit());
+        ResultData<PageData<ParamData>> inActDevice = mDeviceService.getInActDeviceList(paramDataInit());
 
-            List<PageData<ParamData>> list = new ArrayList();
-            list.add(inActDevice.getData());
-            list.add(device.getData());
-            return new ResultData<>(HandleEnum.SUCCESS, list);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
+        List<PageData<ParamData>> list = new ArrayList();
+        list.add(inActDevice.getData());
+        list.add(device.getData());
+        return new ResultData<>(ResultEnum.SUCCESS, list);
     }
 
     @ResponseBody
     @RequestMapping("/activate")
-    public ResultData<ParamData> activate() {
-        try {
-            return mDeviceService.activateDevice(paramDataInit());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
+    public ResultData<ParamData> activate() throws Exception {
+        return mDeviceService.activateDevice(paramDataInit());
     }
 
     @ResponseBody
     @RequestMapping("/inact_detail")
     public ResultData<ParamData> inactDetail() {
-        try {
-            ParamData data = mDeviceService.queryInActDevice(paramDataInit());
-            return new ResultData<>(HandleEnum.SUCCESS, data);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
+        ParamData data = mDeviceService.queryInActDevice(paramDataInit());
+        return new ResultData<>(ResultEnum.SUCCESS, data);
     }
 
     @ResponseBody
     @RequestMapping("/detail")
     public ResultData<ParamData> detail() {
-        try {
-            ParamData data = mDeviceService.queryDevice(paramDataInit());
-            return new ResultData<>(HandleEnum.SUCCESS, data);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
+        ParamData data = mDeviceService.queryDevice(paramDataInit());
+        return new ResultData<>(ResultEnum.SUCCESS, data);
     }
 
     @ResponseBody
     @RequestMapping("/grant_person_list")
     public ResultData<PageData<ParamData>> personList() {
-        try {
-            return mDeviceService.getGrantPersonList(paramDataInit());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
+        return mDeviceService.getGrantPersonList(paramDataInit());
     }
 
     @ResponseBody
     @RequestMapping("/change_info")
-    public ResultData<ParamData> changeInfo() {
-        try {
-            return mDeviceService.changeDeviceInfo(paramDataInit());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
+    public ResultData<ParamData> changeInfo() throws Exception {
+        return mDeviceService.changeDeviceInfo(paramDataInit());
     }
 
     @ResponseBody
     @RequestMapping("/delete")
-    public ResultData<ParamData> delete() {
-        try {
-            return mDeviceService.deleteDevice(paramDataInit());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
+    public ResultData<ParamData> delete() throws Exception {
+        return mDeviceService.deleteDevice(paramDataInit());
     }
 
     @ResponseBody
     @RequestMapping("/check_update")
-    public ResultData<ParamData> checkUpdate() {
-        try {
-            return mDeviceService.checkAppVersionUpdate(paramDataInit());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
+    public ResultData<ParamData> checkUpdate() throws Exception {
+        return mDeviceService.checkAppVersionUpdate(paramDataInit());
     }
 
     @ResponseBody
     @RequestMapping("/group_device_list")
     public ResultData<ParamData> groupDeviceList() {
-        try {
-            return mDeviceService.getGroupDeviceList(paramDataInit());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
+        return mDeviceService.getGroupDeviceList(paramDataInit());
     }
 
     @ResponseBody
     @RequestMapping("/list_by_group")
     public ResultData<PageData<ParamData>> listByGroup() {
-        try {
-            return mDeviceService.getDeviceListByGroup(paramDataInit());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
+        return mDeviceService.getDeviceListByGroup(paramDataInit());
     }
 
     @ResponseBody
     @RequestMapping("/list_group_unselected")
     public ResultData<List<ParamData>> listNoSelected() {
-        try {
-            return mDeviceService.getListGroupUnSelected(paramDataInit());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
-        }
+        return mDeviceService.getListGroupUnSelected(paramDataInit());
     }
 }

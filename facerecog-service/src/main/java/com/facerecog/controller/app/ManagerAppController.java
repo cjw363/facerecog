@@ -2,7 +2,7 @@ package com.facerecog.controller.app;
 
 
 import com.facerecog.controller.base.WebBaseController;
-import com.facerecog.pojo.HandleEnum;
+import com.facerecog.pojo.ResultEnum;
 import com.facerecog.pojo.ParamData;
 import com.facerecog.pojo.ResultData;
 import com.facerecog.service.interf.ManagerAppService;
@@ -35,7 +35,7 @@ public class ManagerAppController extends WebBaseController {
             return mManagerAppService.addPersonWithGrant(paramDataInit());
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResultData<>(HandleEnum.FAIL, e.getMessage());
+            return new ResultData<>(ResultEnum.FAIL, e.getMessage());
         }
     }
 }

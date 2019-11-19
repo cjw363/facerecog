@@ -3,7 +3,7 @@ package com.facerecog.security;
 import com.facerecog.bo.UserInfo;
 import com.facerecog.dao.UserDao;
 import com.facerecog.ehcache.WebCache;
-import com.facerecog.pojo.HandleEnum;
+import com.facerecog.pojo.ResultEnum;
 import com.facerecog.pojo.ParamData;
 import com.facerecog.pojo.ResultData;
 import com.facerecog.utils.CommConst;
@@ -58,7 +58,7 @@ public class SecSuccessHandler implements AuthenticationSuccessHandler {
         mUserDao.updateUserLoginTime(paramData);
 
         PrintWriter out = response.getWriter();
-        ResultData resultData = new ResultData<>(HandleEnum.SUCCESS,userInfo);
+        ResultData resultData = new ResultData<>(ResultEnum.SUCCESS,userInfo);
         String jsonData = JsonUtils.serialize(resultData);
         if(!StringUtils.isEmpty(jsonData))
             out.write(jsonData);
