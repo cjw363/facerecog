@@ -35,6 +35,7 @@
 		<lombok.version>1.16.16</lombok.version>
 		<springfox-swagger.version>2.7.0</springfox-swagger.version>
 		<guava.version>24.0-jre</guava.version>
+		<poi.version>3.9</poi.version>
 	</properties>
 
 	<dependencyManagement>
@@ -74,6 +75,18 @@
 				<groupId>com.github.tobato</groupId>
 				<artifactId>fastdfs-client</artifactId>
 				<version>${fastDFS.client.version}</version>
+			</dependency>
+
+			<!-- 导出excel -->
+			<dependency>
+				<groupId>org.apache.poi</groupId>
+				<artifactId>poi</artifactId>
+				<version>${poi.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.poi</groupId>
+				<artifactId>poi-ooxml</artifactId>
+				<version>${poi.version}</version>
 			</dependency>
 
 			<!-- @Data 生成set get -->
