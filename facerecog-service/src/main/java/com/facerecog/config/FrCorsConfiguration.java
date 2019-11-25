@@ -22,6 +22,8 @@ public class FrCorsConfiguration {
         config.addAllowedOrigin("http://152.136.134.235:9091");
         config.addAllowedOrigin("http://132.232.108.138");
         config.addAllowedOrigin("http://132.232.108.138:8080");
+        config.addAllowedOrigin("http://111.230.151.37");
+        config.addAllowedOrigin("http://111.230.151.37:8080");
         config.addAllowedOrigin("http://www.cjw363.cn");
         config.addAllowedOrigin("http://www.cjw363.cn:9090");
         config.addAllowedOrigin("http://www.cjw363.cn:9091");
