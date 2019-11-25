@@ -17,7 +17,7 @@ spring:
 #    url: jdbc:mysql://132.232.108.138:3030/frdb?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true
 #    username: webdb
 #    password: sn18320110405
-    url: jdbc:mysql://111.230.151.37:3306/frdb?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true
+    url: jdbc:mysql://111.230.151.37:3030/frdb?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true
     username: webdb
     password: sn18320110405
 #    url: jdbc:mysql://127.0.0.1:3306/frdb?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true
