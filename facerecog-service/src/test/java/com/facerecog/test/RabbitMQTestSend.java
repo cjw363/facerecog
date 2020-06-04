@@ -31,4 +31,13 @@ public class RabbitMQTestSend {
         }
     }
 
+    @Test
+    public void sendCreateStaticPageMsg(){
+        try {
+            mAmqpTemplate.convertAndSend(TEST_EXCHANGE,"key_direct_static_page","1");
+        } catch (AmqpException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

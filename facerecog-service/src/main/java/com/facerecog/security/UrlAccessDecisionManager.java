@@ -12,6 +12,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 
+/**
+ * 根据用户角色和url需要角色匹配，decide，不符合抛出AccessDeniedException
+ */
 @Component
 public class UrlAccessDecisionManager implements AccessDecisionManager {
     /**

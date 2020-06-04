@@ -21,17 +21,17 @@ import org.springframework.security.web.access.intercept.FilterSecurityIntercept
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    UserSecurityServiceImpl mUserSecurityService;
+    UserSecurityServiceImpl mUserSecurityService;//loadUserByUsername 返回UserDetails
     @Autowired
-    UrlFilterMetadataSource mUrlFilterMetadataSource;
+    UrlFilterMetadataSource mUrlFilterMetadataSource;//该类的主要功能就是通过当前的请求地址，获取该地址需要的用户角色
     @Autowired
-    UrlAccessDecisionManager mUrlAccessDecisionManager;
+    UrlAccessDecisionManager mUrlAccessDecisionManager;//根据用户角色和url需要角色匹配，decide，不符合抛出AccessDeniedException
     @Autowired
-    SecAccessDeniedHandler mSecAccessDeniedHandler;
+    SecAccessDeniedHandler mSecAccessDeniedHandler;//捕获AccessDeniedException权限不足，返回结果给用户
     @Autowired
-    SecFailureHandler mSecFailureHandler;
+    SecFailureHandler mSecFailureHandler;//登录失败处理，主要判断用户名密码错误，或被禁用，返回结果给用户
     @Autowired
-    SecSuccessHandler mSecSuccessHandler;
+    SecSuccessHandler mSecSuccessHandler;//登录成功处理
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
