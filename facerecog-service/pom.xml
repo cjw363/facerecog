@@ -12,7 +12,7 @@
 	<groupId>com.facerecog.service</groupId>
 	<artifactId>facerecog-service</artifactId>
 	<!-- 打包war需要打开 -->
-<!--	<packaging>war</packaging>-->
+	<packaging>war</packaging>
 
 	<dependencies>
 		<dependency>
@@ -25,12 +25,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 			<!-- 移除嵌入式tomcat插件 打包war需要打开-->
-			<!--<exclusions>
+			<exclusions>
 				<exclusion>
 					<groupId>org.springframework.boot</groupId>
 					<artifactId>spring-boot-starter-tomcat</artifactId>
 				</exclusion>
-			</exclusions>-->
+			</exclusions>
 		</dependency>
 		<!-- mysql驱动 -->
 		<dependency>

@@ -25,5 +25,6 @@ public class RedisTest {
     public void testRedis(){
         // 将code存入redis
         this.redisTemplate.opsForValue().set("key_test", "this is a redis test msg", 5, TimeUnit.MINUTES);
+//        this.redisTemplate.opsForValue().setIfAbsent("key","value");//setnx
     }
 }
