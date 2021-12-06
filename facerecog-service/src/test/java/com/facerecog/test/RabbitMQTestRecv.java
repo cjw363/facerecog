@@ -59,6 +59,27 @@ public class RabbitMQTestRecv {
 //    }
 
     @RabbitListener(queues = TEST_QUEUE)
+    public void receiveMessage01(String msg, Channel channel, Message message) throws IOException {
+        try {
+            System.out.println("【Consumer01成功接收到消息】>>> {}"+ msg);
+            // 确认收到消息，只确认当前消费者的一个消息收到
+            channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+        } catch (Exception e) {
+            if (message.getMessageProperties().getRedelivered()) {
+                System.out.println("【Consumer01】消息已经回滚过，拒绝接收消息 ： {}"+ msg);
+                // 拒绝消息，并且不再重新进入队列
+                channel.basicReject(message.getMessageProperties().getDeliveryTag(), false);
+            } else {
+                System.out.println("【Consumer01】消息即将返回队列重新处理 ：{}"+ msg);
+                //设置消息重新回到队列处理
+                // requeue表示是否重新回到队列，true重新入队
+                channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, true);
+            }
+            e.printStackTrace();
+        }
+    }
+
+    @RabbitListener(queues = TEST_QUEUE)
     public void receiveMessage02(String msg, Channel channel, Message message) throws IOException {
         try {
             // 这里模拟一个空指针异常，
@@ -72,13 +93,11 @@ public class RabbitMQTestRecv {
             if (message.getMessageProperties().getRedelivered()) {
                 System.out.println("【Consumer02】消息已经回滚过，拒绝接收消息 ： {}"+ msg);
                 // 拒绝消息，并且不再重新进入队列
-                //public void basicReject(long deliveryTag, boolean requeue)
                 channel.basicReject(message.getMessageProperties().getDeliveryTag(), false);
             } else {
                 System.out.println("【Consumer02】消息即将返回队列重新处理 ：{}"+ msg);
                 //设置消息重新回到队列处理
                 // requeue表示是否重新回到队列，true重新入队
-                //public void basicNack(long deliveryTag, boolean multiple, boolean requeue)
                 channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, true);
             }
             e.printStackTrace();

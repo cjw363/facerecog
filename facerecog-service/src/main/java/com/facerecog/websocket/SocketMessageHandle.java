@@ -115,7 +115,7 @@ public class SocketMessageHandle implements WebSocketHandler {
             System.out.println("收到用户:" + deviceSn + "的消息");
             System.out.println(message.getPayload().toString());
 
-            sendMessageToDevice(deviceSn, new TextMessage("服务端收到了"));
+            sendMessageToDevice(deviceSn, new TextMessage("pong"));
             System.out.println("===========================================");
         }
     }

@@ -40,11 +40,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/index.html", "/static/**","/user/nologin");
+        web.ignoring().antMatchers("/index.html", "/static/**","/user/nologin","/ws");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        //authorizeRequests所有security全注解配置实现的开端，表示开始说明需要的权限。
+        //需要的权限分量部分，第一部分，是拦截的路径，第二部分访问该路径需要的权限。
+        //antMatchers表示什么路径，permitAll任何权限都可以访问，直接放行所有
+        //anyRequest任何的请求，authenticated认证后才能访问
+        //and().csrf().disable()固定写法，表示crsf拦截失效。crsf强大的防攻击
+
         http.cors().and().csrf().disable().authorizeRequests()
                 .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
                     @Override

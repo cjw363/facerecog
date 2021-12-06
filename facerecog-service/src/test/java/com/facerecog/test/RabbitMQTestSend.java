@@ -62,7 +62,9 @@ public class RabbitMQTestSend {
                 }
             });
             CorrelationData correlationData = new CorrelationData(UUID.randomUUID().toString());
-            mRabbitTemplate.convertAndSend(TEST_EXCHANGE,"","hello",correlationData);
+            CorrelationData correlationData2 = new CorrelationData(UUID.randomUUID().toString());
+            mRabbitTemplate.convertAndSend(TEST_EXCHANGE,"","hello1",correlationData);
+            mRabbitTemplate.convertAndSend(TEST_EXCHANGE,"","hello2",correlationData2);
         } catch (AmqpException e) {
             e.printStackTrace();
         }
