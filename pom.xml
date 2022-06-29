@@ -35,7 +35,7 @@
 		<lombok.version>1.16.16</lombok.version>
 		<springfox-swagger.version>2.7.0</springfox-swagger.version>
 		<guava.version>24.0-jre</guava.version>
-		<poi.version>3.9</poi.version>
+		<poi.version>4.1.1</poi.version>
 	</properties>
 
 	<dependencyManagement>
